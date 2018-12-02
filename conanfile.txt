@@ -1,0 +1,14 @@
+[requires]
+stb/20180214@conan/stable
+glm/0.9.9.1@g-truc/stable
+
+[options]
+
+[generators]
+txt
+cmake
+
+[imports]
+bin, *.dll -> ./bin
+lib, *.dylib* -> ./bin
+lib, *.so* -> .bin
