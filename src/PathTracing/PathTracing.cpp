@@ -3,12 +3,12 @@
 
 #include <glm/glm.hpp>
 
-#include "Camera.h"
-#include "Hitable.h"
-#include "Material.h"
-#include "PathTracing.h"
-#include "Ray.h"
-#include "Scene.h"
+#include "PathTracing/Camera.h"
+#include "PathTracing/Hitable.h"
+#include "PathTracing/Material.h"
+#include "PathTracing/PathTracing.h"
+#include "PathTracing/Ray.h"
+#include "PathTracing/Scene.h"
 #include "Util/Image.h"
 #include "Util/Random.h"
 

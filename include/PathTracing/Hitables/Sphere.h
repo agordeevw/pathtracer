@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/vec3.hpp>
 
-#include "Hitable.h"
+#include "PathTracing/Hitable.h"
 
 namespace PathTracing {
 namespace Hitables {

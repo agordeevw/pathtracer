@@ -1,11 +1,11 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
-#include "Hitables/Sphere.h"
-#include "Materials/Dielectric.h"
-#include "Materials/Lambertian.h"
-#include "Materials/Metal.h"
-#include "Scene.h"
+#include "PathTracing/Hitables/Sphere.h"
+#include "PathTracing/Materials/Dielectric.h"
+#include "PathTracing/Materials/Lambertian.h"
+#include "PathTracing/Materials/Metal.h"
+#include "PathTracing/Scene.h"
 #include "Util/Random.h"
 #include "Util/SceneGeneration.h"
 

@@ -2,9 +2,9 @@
 #include <memory>
 #include <vector>
 
-#include "Hitable.h"
-#include "Hitables/HitableList.h"
-#include "Material.h"
+#include "PathTracing/Hitable.h"
+#include "PathTracing/Hitables/HitableList.h"
+#include "PathTracing/Material.h"
 
 namespace PathTracing {
 class Material;

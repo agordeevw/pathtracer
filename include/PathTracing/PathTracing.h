@@ -12,5 +12,6 @@ struct TracingParameters {
 class Scene;
 class Camera;
 
-Util::Image traceScene(const Scene& scene, const Camera& camera, const TracingParameters& params);
+Util::Image traceScene(const Scene& scene, const Camera& camera,
+                       const TracingParameters& params);
 }  // namespace PathTracing

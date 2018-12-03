@@ -1,9 +1,9 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
-#include "Hitable.h"
-#include "Materials/Dielectric.h"
-#include "Ray.h"
+#include "PathTracing/Hitable.h"
+#include "PathTracing/Materials/Dielectric.h"
+#include "PathTracing/Ray.h"
 #include "Util/Random.h"
 
 namespace {

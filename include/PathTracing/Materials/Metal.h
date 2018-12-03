@@ -1,17 +1,20 @@
 #pragma once
-#include "Material.h"
+#include <glm/vec3.hpp>
+
+#include "PathTracing/Material.h"
 
 namespace PathTracing {
 namespace Materials {
-class Lambertian : public Material {
+class Metal : public Material {
  public:
-  Lambertian(const glm::vec3& a);
-  ~Lambertian() override = default;
+  Metal(const glm::vec3& albedo, float fuzziness);
+  ~Metal() override = default;
 
   bool scatter(const Ray& rayIn, const HitRecord& rec, glm::vec3& attenuation,
                Ray& scattered) const override;
 
   glm::vec3 albedo;
+  float fuzziness;
 };
 }  // namespace Materials
 }  // namespace PathTracing

@@ -1,8 +1,8 @@
 #include <glm/geometric.hpp>
 
-#include "Hitable.h"
-#include "Materials/Metal.h"
-#include "Ray.h"
+#include "PathTracing/Hitable.h"
+#include "PathTracing/Materials/Metal.h"
+#include "PathTracing/Ray.h"
 #include "Util/Random.h"
 
 namespace PathTracing {

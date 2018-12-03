@@ -3,8 +3,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "PathTracing/Scene.h"
 #include "PathTracingApplication.h"
-#include "Scene.h"
 #include "Util/SceneGeneration.h"
 
 PathTracingApplication::PathTracingApplication(const std::string& inputFilePath,

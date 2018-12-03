@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "Hitable.h"
+#include "PathTracing/Hitable.h"
 
 namespace PathTracing {
 namespace Hitables {

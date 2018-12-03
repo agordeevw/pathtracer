@@ -1,7 +1,7 @@
 #include <glm/geometric.hpp>
 
-#include "Hitables/Sphere.h"
-#include "Ray.h"
+#include "PathTracing/Hitables/Sphere.h"
+#include "PathTracing/Ray.h"
 
 namespace PathTracing {
 namespace Hitables {

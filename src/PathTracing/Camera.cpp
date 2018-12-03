@@ -3,7 +3,7 @@
 
 #include <glm/geometric.hpp>
 
-#include "Camera.h"
+#include "PathTracing/Camera.h"
 #include "Util/Random.h"
 
 namespace PathTracing {

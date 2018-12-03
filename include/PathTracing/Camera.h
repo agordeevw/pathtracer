@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/vec3.hpp>
 
-#include "Ray.h"
+#include "PathTracing/Ray.h"
 
 namespace PathTracing {
 struct CameraParameters {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "PathTracing/Scene.h"
 
 namespace Util {
 namespace SceneGeneration {

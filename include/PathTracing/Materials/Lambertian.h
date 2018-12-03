@@ -1,16 +1,17 @@
-#include "Material.h"
+#pragma once
+#include "PathTracing/Material.h"
 
 namespace PathTracing {
 namespace Materials {
-class Dielectric : public Material {
+class Lambertian : public Material {
  public:
-  Dielectric(float ri);
-  ~Dielectric() override = default;
+  Lambertian(const glm::vec3& a);
+  ~Lambertian() override = default;
 
   bool scatter(const Ray& rayIn, const HitRecord& rec, glm::vec3& attenuation,
                Ray& scattered) const override;
 
-  float reflectiveIdx;
+  glm::vec3 albedo;
 };
 }  // namespace Materials
 }  // namespace PathTracing

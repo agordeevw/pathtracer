@@ -1,6 +1,6 @@
-#include "Materials/Lambertian.h"
-#include "Hitable.h"
-#include "Ray.h"
+#include "PathTracing/Materials/Lambertian.h"
+#include "PathTracing/Hitable.h"
+#include "PathTracing/Ray.h"
 #include "Util/Random.h"
 
 namespace PathTracing {

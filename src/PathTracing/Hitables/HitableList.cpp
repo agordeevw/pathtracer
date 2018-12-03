@@ -1,4 +1,4 @@
-#include "Hitables/HitableList.h"
+#include "PathTracing/Hitables/HitableList.h"
 
 namespace PathTracing {
 namespace Hitables {
