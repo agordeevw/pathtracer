@@ -1,11 +1,9 @@
-#include <atomic>
 #include <cassert>
 #define _USE_MATH_DEFINES
 #include <chrono>
 #include <cmath>
 #include <iostream>
 #include <memory>
-#include <random>
 #include <thread>
 #include <vector>
 
@@ -15,28 +13,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-std::default_random_engine g_randomEngine;
-
-float randf() {
-  std::uniform_real_distribution<float> distribution;
-  return distribution(g_randomEngine);
-}
-
-glm::vec3 randInUnitSphere() {
-  glm::vec3 p;
-  do {
-    p = 2.0f * glm::vec3{randf(), randf(), randf()} - 1.0f;
-  } while (glm::dot(p, p) >= 1.0f);
-  return p;
-}
-
-glm::vec3 randInUnitDisk() {
-  glm::vec3 p;
-  do {
-    p = 2.0f * glm::vec3{randf(), randf(), 0.0f} - glm::vec3{1.0f, 1.0f, 0.0f};
-  } while (glm::dot(p, p) >= 1.0f);
-  return p;
-}
+#include "MyRandom.h"
 
 float schlick(float cosine, float reflectiveIdx) {
   float r0 = (1 - reflectiveIdx) / (1 + reflectiveIdx);
@@ -141,6 +118,8 @@ class Lambertian : public Material {
 
   bool scatter(const Ray& rayIn, const HitRecord& rec, glm::vec3& attenuation,
                Ray& scattered) const override {
+    using MyRandom::randInUnitSphere;
+
     glm::vec3 target = rec.point + rec.normal + randInUnitSphere();
     scattered = Ray{rec.point, target - rec.point};
     attenuation = albedo;
@@ -161,6 +140,8 @@ class Metal : public Material {
 
   bool scatter(const Ray& rayIn, const HitRecord& rec, glm::vec3& attenuation,
                Ray& scattered) const override {
+    using MyRandom::randInUnitSphere;
+
     glm::vec3 reflected =
         glm::reflect(glm::normalize(rayIn.direction), rec.normal);
     scattered = Ray{rec.point, reflected + fuzz * randInUnitSphere()};
@@ -178,6 +159,8 @@ class Dielectric : public Material {
 
   bool scatter(const Ray& rayIn, const HitRecord& rec, glm::vec3& attenuation,
                Ray& scattered) const override {
+    using MyRandom::randf;
+
     attenuation = glm::vec3{1.0f, 1.0f, 1.0f};
     glm::vec3 outwardNormal;
     float niOverNt;
@@ -232,6 +215,8 @@ class Camera {
   }
 
   Ray getRay(float s, float t) const {
+    using MyRandom::randInUnitDisk;
+
     glm::vec3 rd = lensRadius * randInUnitDisk();
     glm::vec3 offset = u * rd.x + v * rd.y;
     return {origin + offset, lowerLeftCorner + s * horizontal + t * vertical -
@@ -274,6 +259,8 @@ struct SceneResources {
 };
 
 HitableList randomScene(SceneResources& resources) {
+  using MyRandom::randf;
+
   int n = 500;
   resources.spheres.reserve(n + 1);
 
@@ -342,6 +329,8 @@ auto measure(Func&& f) {
 }
 
 int main() {
+  using MyRandom::randf;
+
   const int width = 1024, height = 768;
   const int samplesPerPixel = 256;
 
@@ -361,8 +350,6 @@ int main() {
                 focusDist};
 
   std::vector<glm::u8vec3> image(width * height * 3);
-
-  std::atomic<int> counter = 0;
 
   auto renderTile = [&](int startX, int startY, int sizeX, int sizeY) {
     for (int y = startY; y < std::min(startY + sizeY, height); y++) {
@@ -385,16 +372,15 @@ int main() {
   const int groupSizeX = 32, groupSizeY = 32;
 
   // one thread runs
-  auto render =
-      [&](int group) {
-        for (int groupY = 0; groupY < height / groupSizeY + 1; groupY++) {
-          for (int groupX = 0; groupX < width / groupSizeX + 1; groupX++) {
-            if ((groupX + groupY * height / groupSizeY) % 4 == group) {
-              renderTile(groupX * groupSizeX, groupY * groupSizeY, groupSizeX,
-                         groupSizeY);
-            }
-          }
+  auto render = [&](int group) {
+    for (int groupY = 0; groupY < height / groupSizeY + 1; groupY++) {
+      for (int groupX = 0; groupX < width / groupSizeX + 1; groupX++) {
+        if ((groupX + groupY * height / groupSizeY) % 4 == group) {
+          renderTile(groupX * groupSizeX, groupY * groupSizeY, groupSizeX,
+                     groupSizeY);
         }
+      }
+    }
   };
 
   float renderingTimeInSeconds = measure([&]() {
