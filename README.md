@@ -1,4 +1,4 @@
-# rtiow
+# pathtracer
 Implementing Peter Shirley's raytracing books.
 
 # Building
