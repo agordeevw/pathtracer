@@ -1,9 +1,9 @@
 #include <glm/geometric.hpp>
 
+#include "Hitable.h"
 #include "Materials/Metal.h"
-#include "Hitables/Hitable.h"
-#include "Util/MyRandom.h"
 #include "Ray.h"
+#include "Util/MyRandom.h"
 
 Metal::Metal(const glm::vec3& albedo, float fuzziness) : albedo(albedo) {
   if (fuzziness < 1.0f)

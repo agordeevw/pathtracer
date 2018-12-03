@@ -1,7 +1,7 @@
 #include "Materials/Lambertian.h"
-#include "Hitables/Hitable.h"
-#include "Util/MyRandom.h"
+#include "Hitable.h"
 #include "Ray.h"
+#include "Util/MyRandom.h"
 
 Lambertian::Lambertian(const glm::vec3& a) : albedo(a) {}
 

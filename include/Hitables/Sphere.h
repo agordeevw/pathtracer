@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/vec3.hpp>
 
-#include "Hitables/Hitable.h"
+#include "Hitable.h"
 
 class Sphere : public Hitable {
  public:

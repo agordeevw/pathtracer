@@ -1,10 +1,10 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
+#include "Hitable.h"
 #include "Materials/Dielectric.h"
-#include "Hitables/Hitable.h"
-#include "Util/MyRandom.h"
 #include "Ray.h"
+#include "Util/MyRandom.h"
 
 namespace {
 float schlick(float cosine, float reflectiveIdx) {

@@ -2,7 +2,9 @@
 #include <memory>
 #include <vector>
 
+#include "Hitable.h"
 #include "Hitables/HitableList.h"
+#include "Material.h"
 
 class Material;
 class Hitable;
@@ -26,8 +28,6 @@ class Scene {
   const HitableList& getWorld() const { return world; }
 
  private:
-  // TODO: to improve data locality, implement linear allocator to store
-  // materials and hitables contiguously
   HitableList world;
   std::vector<std::unique_ptr<Material>> materialsStorage;
   std::vector<std::unique_ptr<Hitable>> hitablesStorage;

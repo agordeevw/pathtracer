@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "Hitables/Hitable.h"
+#include "Hitable.h"
 
 class HitableList : public Hitable {
  public:
