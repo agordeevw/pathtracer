@@ -1,6 +1,9 @@
 #include <iostream>
 
+#ifdef _MSC_VER
 #pragma warning(disable : 4201)  // glm hits this warning a lot
+#endif
+
 #include "PathTracingApplication.h"
 #include "Util/ParseArgs.h"
 
