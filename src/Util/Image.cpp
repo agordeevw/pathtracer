@@ -2,7 +2,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-#include "Image.h"
+#include "Util/Image.h"
 
 Image::Image(int width, int height)
     : data(sizeof(glm::u8vec3) * width * height) {}
