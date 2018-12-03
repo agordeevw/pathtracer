@@ -3,6 +3,7 @@
 #include "Util/ParseCommandLineArgs.h"
 
 namespace Util {
+namespace ParseArgs {
 bool parseArgs(int argc, char** argv, ProgramOptions& opts) {
   cxxopts::Options options(argv[0]);
   auto& addOption = options.add_options();
@@ -45,4 +46,5 @@ bool parseArgs(int argc, char** argv, ProgramOptions& opts) {
 
   return true;
 }
+}  // namespace ParseArgs
 }  // namespace Util

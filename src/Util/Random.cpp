@@ -1,7 +1,8 @@
-#include "Util/MyRandom.h"
+#include "Util/Random.h"
 #include <glm/geometric.hpp>
 
-namespace MyRandom {
+namespace Util {
+namespace Random {
 std::default_random_engine g_randomEngine;
 
 float randf(float min, float max) {
@@ -24,4 +25,5 @@ glm::vec3 randInUnitDisk() {
   } while (glm::dot(p, p) >= 1.0f);
   return p;
 }
-}  // namespace MyRandom
+}  // namespace Random
+}  // namespace Util

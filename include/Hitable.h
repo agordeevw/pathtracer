@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/vec3.hpp>
 
+namespace PathTracing {
 class Ray;
 class Material;
 
@@ -18,3 +19,4 @@ class Hitable {
   virtual bool hit(const Ray& r, float tMin, float tMax,
                    HitRecord& rec) const = 0;
 };
+}  // namespace PathTracing

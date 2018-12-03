@@ -1,6 +1,8 @@
 #pragma once
 #include "Material.h"
 
+namespace PathTracing {
+namespace Materials {
 class Lambertian : public Material {
  public:
   Lambertian(const glm::vec3& a);
@@ -11,3 +13,5 @@ class Lambertian : public Material {
 
   glm::vec3 albedo;
 };
+}  // namespace Materials
+}  // namespace PathTracing

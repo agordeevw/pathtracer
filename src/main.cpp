@@ -2,7 +2,6 @@
 #include <iostream>
 
 #pragma warning(disable : 4201)  // glm hits this warning a lot
-#include <cxxopts.hpp>
 #include <glm/glm.hpp>
 #include <nlohmann/json.hpp>
 
@@ -13,8 +12,8 @@
 #include "Util/SceneGeneration.h"
 
 int main(int argc, char** argv) {
-  Util::ProgramOptions opts;
-  if (!parseArgs(argc, argv, opts)) {
+  Util::ParseArgs::ProgramOptions opts;
+  if (!Util::ParseArgs::parseArgs(argc, argv, opts)) {
     return 1;
   }
 
@@ -59,11 +58,11 @@ int main(int argc, char** argv) {
   }
   tracingParams.threadsCount = opts.threadCount;
 
-  Scene scene = SceneGeneration::randomSpheres();
-  Camera camera{cameraParams};
+  PathTracing::Scene scene = Util::SceneGeneration::randomSpheres();
+  PathTracing::Camera camera{cameraParams};
 
   std::cout << "Tracing...\n";
-  Image image = traceScene(scene, camera, tracingParams);
+  Util::Image image = PathTracing::traceScene(scene, camera, tracingParams);
 
   std::cout << "Done.\n";
   image.writeToFile(opts.outputPath.c_str());

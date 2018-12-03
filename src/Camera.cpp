@@ -4,8 +4,9 @@
 #include <glm/geometric.hpp>
 
 #include "Camera.h"
-#include "Util/MyRandom.h"
+#include "Util/Random.h"
 
+namespace PathTracing {
 Camera::Camera(const CameraParameters& params) {
   lensRadius = params.aperture * 0.5f;
   float theta = params.fov * float(M_PI) / 180.0f;
@@ -22,8 +23,9 @@ Camera::Camera(const CameraParameters& params) {
 }
 
 Ray Camera::getRay(float s, float t) const {
-  glm::vec3 rd = lensRadius * MyRandom::randInUnitDisk();
+  glm::vec3 rd = lensRadius * Util::Random::randInUnitDisk();
   glm::vec3 offset = u * rd.x + v * rd.y;
   return {origin + offset,
           lowerLeftCorner + s * horizontal + t * vertical - (origin + offset)};
 }
+}  // namespace PathTracing

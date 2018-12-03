@@ -3,6 +3,8 @@
 
 #include "Hitable.h"
 
+namespace PathTracing {
+namespace Hitables {
 class HitableList : public Hitable {
  public:
   ~HitableList() override = default;
@@ -14,3 +16,5 @@ class HitableList : public Hitable {
  private:
   std::vector<const Hitable*> hitables;
 };
+}  // namespace Hitables
+}  // namespace PathTracing

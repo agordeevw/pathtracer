@@ -3,6 +3,8 @@
 
 #include "Hitable.h"
 
+namespace PathTracing {
+namespace Hitables {
 class Sphere : public Hitable {
  public:
   Sphere(const glm::vec3& center, float radius, const Material& material);
@@ -14,3 +16,5 @@ class Sphere : public Hitable {
   float radius;
   const Material* material;
 };
+}  // namespace Hitables
+}  // namespace PathTracing

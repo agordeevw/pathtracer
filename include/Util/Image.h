@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 
+namespace Util {
 class Image {
  public:
   Image(int width, int height);
@@ -16,3 +17,4 @@ class Image {
   int width;
   int height;
 };
+}  // namespace Util

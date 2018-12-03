@@ -4,7 +4,7 @@
 #include "Hitable.h"
 #include "Materials/Dielectric.h"
 #include "Ray.h"
-#include "Util/MyRandom.h"
+#include "Util/Random.h"
 
 namespace {
 float schlick(float cosine, float reflectiveIdx) {
@@ -14,11 +14,13 @@ float schlick(float cosine, float reflectiveIdx) {
 }
 }  // namespace
 
+namespace PathTracing {
+namespace Materials {
 Dielectric::Dielectric(float ri) : reflectiveIdx{ri} {}
 
 bool Dielectric::scatter(const Ray& rayIn, const HitRecord& rec,
                          glm::vec3& attenuation, Ray& scattered) const {
-  using MyRandom::randf;
+  using Util::Random::randf;
 
   attenuation = glm::vec3{1.0f, 1.0f, 1.0f};
   glm::vec3 outwardNormal;
@@ -51,3 +53,5 @@ bool Dielectric::scatter(const Ray& rayIn, const HitRecord& rec,
   }
   return true;
 }
+}  // namespace Materials
+}  // namespace PathTracing

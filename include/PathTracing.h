@@ -1,9 +1,6 @@
 #pragma once
 #include "Util/Image.h"
 
-class Scene;
-class Camera;
-
 namespace PathTracing {
 struct TracingParameters {
   int imageWidth;
@@ -12,5 +9,8 @@ struct TracingParameters {
   int threadsCount;
 };
 
-Image traceScene(const Scene& scene, const Camera& camera, const TracingParameters& params);
+class Scene;
+class Camera;
+
+Util::Image traceScene(const Scene& scene, const Camera& camera, const TracingParameters& params);
 }  // namespace PathTracing

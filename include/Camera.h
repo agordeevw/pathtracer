@@ -3,6 +3,7 @@
 
 #include "Ray.h"
 
+namespace PathTracing {
 struct CameraParameters {
   glm::vec3 lookFrom;
   glm::vec3 lookAt;
@@ -27,3 +28,4 @@ class Camera {
   glm::vec3 u, v, w;
   float lensRadius;
 };
+}  // namespace PathTracing

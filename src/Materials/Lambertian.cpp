@@ -1,14 +1,18 @@
 #include "Materials/Lambertian.h"
 #include "Hitable.h"
 #include "Ray.h"
-#include "Util/MyRandom.h"
+#include "Util/Random.h"
 
+namespace PathTracing {
+namespace Materials {
 Lambertian::Lambertian(const glm::vec3& a) : albedo(a) {}
 
 bool Lambertian::scatter(const Ray& rayIn, const HitRecord& rec,
                          glm::vec3& attenuation, Ray& scattered) const {
-  glm::vec3 target = rec.point + rec.normal + MyRandom::randInUnitSphere();
+  glm::vec3 target = rec.point + rec.normal + Util::Random::randInUnitSphere();
   scattered = Ray{rec.point, target - rec.point};
   attenuation = albedo;
   return true;
 }
+}  // namespace Materials
+}  // namespace PathTracing

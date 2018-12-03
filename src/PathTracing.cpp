@@ -10,7 +10,9 @@
 #include "Ray.h"
 #include "Scene.h"
 #include "Util/Image.h"
-#include "Util/MyRandom.h"
+#include "Util/Random.h"
+
+namespace PathTracing {
 
 namespace {
 glm::vec3 noHitColor(const Ray& r) {
@@ -35,13 +37,14 @@ glm::vec3 color(const Ray& r, const Hitable& hitable, int depth) {
 }
 }  // namespace
 
-Image PathTracing::traceScene(const Scene& scene, const Camera& camera,
-                              const TracingParameters& params) {
-  using MyRandom::randf;
+Util::Image traceScene(const Scene& scene, const Camera& camera,
+                       const TracingParameters& params) {
+  using Util::Random::randf;
 
-  Image image(params.imageWidth, params.imageHeight);
+  Util::Image image(params.imageWidth, params.imageHeight);
 
-  auto renderTile = [&scene, &camera, &image, &params](int startX, int startY, int sizeX, int sizeY) {
+  auto renderTile = [&scene, &camera, &image, &params](int startX, int startY,
+                                                       int sizeX, int sizeY) {
     for (int y = startY; y < std::min(startY + sizeY, params.imageHeight);
          y++) {
       for (int x = startX; x < std::min(startX + sizeX, params.imageWidth);
@@ -64,7 +67,8 @@ Image PathTracing::traceScene(const Scene& scene, const Camera& camera,
 
   const int groupSizeX = 32, groupSizeY = 32;
 
-  auto renderThreadTask = [&params, &renderTile, groupSizeX, groupSizeY](int threadId) {
+  auto renderThreadTask = [&params, &renderTile, groupSizeX,
+                           groupSizeY](int threadId) {
     for (int gY = 0; gY < params.imageHeight / groupSizeY + 1; gY++) {
       for (int gX = 0; gX < params.imageWidth / groupSizeX + 1; gX++) {
         int gId = gX + gY * params.imageHeight / groupSizeY;
@@ -89,3 +93,4 @@ Image PathTracing::traceScene(const Scene& scene, const Camera& camera,
 
   return image;
 }
+}  // namespace PathTracing

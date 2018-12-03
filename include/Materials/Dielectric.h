@@ -1,5 +1,7 @@
 #include "Material.h"
 
+namespace PathTracing {
+namespace Materials {
 class Dielectric : public Material {
  public:
   Dielectric(float ri);
@@ -10,3 +12,5 @@ class Dielectric : public Material {
 
   float reflectiveIdx;
 };
+}  // namespace Materials
+}  // namespace PathTracing

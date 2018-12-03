@@ -3,6 +3,8 @@
 
 #include "Material.h"
 
+namespace PathTracing {
+namespace Materials {
 class Metal : public Material {
  public:
   Metal(const glm::vec3& albedo, float fuzziness);
@@ -14,3 +16,5 @@ class Metal : public Material {
   glm::vec3 albedo;
   float fuzziness;
 };
+}  // namespace Materials
+}  // namespace PathTracing

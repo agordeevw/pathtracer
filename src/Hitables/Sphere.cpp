@@ -3,6 +3,8 @@
 #include "Hitables/Sphere.h"
 #include "Ray.h"
 
+namespace PathTracing {
+namespace Hitables {
 Sphere::Sphere(const glm::vec3& center, float radius, const Material& material)
     : center(center), radius(radius), material(&material) {}
 
@@ -32,3 +34,5 @@ bool Sphere::hit(const Ray& r, float tMin, float tMax, HitRecord& rec) const {
   }
   return false;
 }
+}  // namespace Hitables
+}  // namespace PathTracing

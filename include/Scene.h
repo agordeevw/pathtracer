@@ -6,6 +6,7 @@
 #include "Hitables/HitableList.h"
 #include "Material.h"
 
+namespace PathTracing {
 class Material;
 class Hitable;
 
@@ -25,10 +26,11 @@ class Scene {
     return *hitablesStorage.back();
   }
 
-  const HitableList& getWorld() const { return world; }
+  const Hitables::HitableList& getWorld() const { return world; }
 
  private:
-  HitableList world;
+  Hitables::HitableList world;
   std::vector<std::unique_ptr<Material>> materialsStorage;
   std::vector<std::unique_ptr<Hitable>> hitablesStorage;
 };
+}  // namespace PathTracing
