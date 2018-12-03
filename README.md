@@ -9,7 +9,7 @@ Run these commands from root directory:
 ```
 mkdir build
 cd build
-conan install ..
+conan install -s build_type=Release ..
 cmake ..
 cmake --build .
 ```
