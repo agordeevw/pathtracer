@@ -5,6 +5,12 @@ class Scene;
 class Camera;
 
 namespace PathTracing {
-Image traceScene(const Scene& scene, const Camera& camera, int imageWidth,
-                 int imageHeight, int samplesPerPixel);
+struct TracingParameters {
+  int imageWidth;
+  int imageHeight;
+  int samplesPerPixel;
+  int threadsCount;
+};
+
+Image traceScene(const Scene& scene, const Camera& camera, const TracingParameters& params);
 }  // namespace PathTracing

@@ -5,11 +5,11 @@
 
 #include "Camera.h"
 #include "Hitable.h"
-#include "Util/Image.h"
 #include "Material.h"
 #include "PathTracing.h"
 #include "Ray.h"
 #include "Scene.h"
+#include "Util/Image.h"
 #include "Util/MyRandom.h"
 
 namespace {
@@ -36,22 +36,23 @@ glm::vec3 color(const Ray& r, const Hitable& hitable, int depth) {
 }  // namespace
 
 Image PathTracing::traceScene(const Scene& scene, const Camera& camera,
-                              int imageWidth, int imageHeight,
-                              int samplesPerPixel) {
+                              const TracingParameters& params) {
   using MyRandom::randf;
 
-  Image image(imageWidth, imageHeight);
+  Image image(params.imageWidth, params.imageHeight);
 
-  auto renderTile = [&](int startX, int startY, int sizeX, int sizeY) {
-    for (int y = startY; y < std::min(startY + sizeY, imageHeight); y++) {
-      for (int x = startX; x < std::min(startX + sizeX, imageWidth); x++) {
+  auto renderTile = [&scene, &camera, &image, &params](int startX, int startY, int sizeX, int sizeY) {
+    for (int y = startY; y < std::min(startY + sizeY, params.imageHeight);
+         y++) {
+      for (int x = startX; x < std::min(startX + sizeX, params.imageWidth);
+           x++) {
         glm::vec3 col{};
-        for (int sample = 0; sample < samplesPerPixel; sample++) {
-          float u = (float(x) + randf() - 0.5f) / float(imageWidth);
-          float v = (float(y) + randf() - 0.5f) / float(imageHeight);
+        for (int sample = 0; sample < params.samplesPerPixel; sample++) {
+          float u = (float(x) + randf() - 0.5f) / float(params.imageWidth);
+          float v = (float(y) + randf() - 0.5f) / float(params.imageHeight);
 
           col += color(camera.getRay(u, v), scene.getWorld(), 0) /
-                 float(samplesPerPixel);
+                 float(params.samplesPerPixel);
         }
         // gamma-correction
         col = glm::sqrt(col);
@@ -63,25 +64,27 @@ Image PathTracing::traceScene(const Scene& scene, const Camera& camera,
 
   const int groupSizeX = 32, groupSizeY = 32;
 
-  auto render = [&](int group) {
-    for (int groupY = 0; groupY < imageHeight / groupSizeY + 1; groupY++) {
-      for (int groupX = 0; groupX < imageWidth / groupSizeX + 1; groupX++) {
-        if ((groupX + groupY * imageHeight / groupSizeY) % 4 == group) {
-          renderTile(groupX * groupSizeX, groupY * groupSizeY, groupSizeX,
-                     groupSizeY);
+  auto renderThreadTask = [&params, &renderTile, groupSizeX, groupSizeY](int threadId) {
+    for (int gY = 0; gY < params.imageHeight / groupSizeY + 1; gY++) {
+      for (int gX = 0; gX < params.imageWidth / groupSizeX + 1; gX++) {
+        int gId = gX + gY * params.imageHeight / groupSizeY;
+        if (gId % params.threadsCount == threadId) {
+          renderTile(gX * groupSizeX, gY * groupSizeY, groupSizeX, groupSizeY);
         }
       }
     }
   };
 
-  constexpr int threadsCount = 2;
-
-  std::thread renderThreads[threadsCount];
-  for (int i = 0; i < threadsCount; i++) {
-    renderThreads[i] = std::thread(render, i);
-  }
-  for (int i = 0; i < threadsCount; i++) {
-    renderThreads[i].join();
+  if (params.threadsCount > 1) {
+    std::vector<std::thread> renderThreads(params.threadsCount);
+    for (int i = 0; i < params.threadsCount; i++) {
+      renderThreads[i] = std::thread(renderThreadTask, i);
+    }
+    for (int i = 0; i < params.threadsCount; i++) {
+      renderThreads[i].join();
+    }
+  } else {
+    renderTile(0, 0, params.imageWidth, params.imageHeight);
   }
 
   return image;

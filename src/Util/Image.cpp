@@ -5,7 +5,7 @@
 #include "Util/Image.h"
 
 Image::Image(int width, int height)
-    : data(sizeof(glm::u8vec3) * width * height) {}
+    : data(sizeof(glm::u8vec3) * width * height), width(width), height(height) {}
 
 void Image::setPixel(int x, int y, glm::u8vec3 color) {
   if (x >= 0 && x < width && y >= 0 && y < height) {
