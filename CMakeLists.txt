@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-set (PROJECT_NAME RTiOW)
+set (PROJECT_NAME rtiow)
 project(${PROJECT_NAME})
 
 include(ExternalProject)
