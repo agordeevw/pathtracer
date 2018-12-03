@@ -1,4 +1,4 @@
-#include "Scene/Hitables/HitableList.h"
+#include "Hitables/HitableList.h"
 
 void HitableList::append(const Hitable& hitable) {
   hitables.push_back(&hitable);

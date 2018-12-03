@@ -1,10 +1,6 @@
-#pragma warning (disable: 4201) // glm hits this warning a lot
+#pragma warning(disable : 4201)  // glm hits this warning a lot
 
-#define _USE_MATH_DEFINES
-#include <chrono>
-#include <cmath>
 #include <iostream>
-#include <memory>
 #include <thread>
 #include <vector>
 
@@ -14,16 +10,18 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-#include "Ray.h"
-#include "Util/MyRandom.h"
-#include "Scene/Hitables/Hitable.h"
-#include "Scene/Hitables/HitableList.h"
-#include "Scene/Hitables/Sphere.h"
+#include "Camera.h"
+#include "Hitables/Hitable.h"
+#include "Hitables/HitableList.h"
+#include "Hitables/Sphere.h"
+#include "Materials/Dielectric.h"
 #include "Materials/Lambertian.h"
 #include "Materials/Metal.h"
-#include "Materials/Dielectric.h"
-#include "Scene/Camera.h"
-
+#include "Util/MeasureTime.h"
+#include "Ray.h"
+#include "Scene.h"
+#include "Util/MyRandom.h"
+#include "Util/SceneGeneration.h"
 
 glm::vec3 noHitColor(const Ray& r) {
   float param = (glm::normalize(r.direction).y + 1.0f) * 0.5f;
@@ -46,89 +44,13 @@ glm::vec3 color(const Ray& r, const Hitable& hitable, int depth) {
   }
 }
 
-struct SceneResources {
-  std::vector<std::unique_ptr<Material>> materials;
-  std::vector<Sphere> spheres;
-};
-
-HitableList randomScene(SceneResources& resources) {
-  using MyRandom::randf;
-
-  int n = 500;
-  resources.spheres.reserve(n + 1);
-
-  resources.materials.push_back(
-      std::make_unique<Lambertian>(glm::vec3{0.5f, 0.5f, 0.5f}));
-  resources.spheres.emplace_back(glm::vec3{0.0f, -1000.0f, 0.0f}, 1000.0f,
-                                 *resources.materials.back());
-
-  for (int a = -11; a < 11; a++) {
-    for (int b = -11; b < 11; b++) {
-      float chooseMat = randf();
-      glm::vec3 center(a + 0.9f * randf(), 0.2f, b + 0.9f * randf());
-      if (glm::length(center - glm::vec3{4.0f, 0.2f, 0.0f}) > 0.9f) {
-        if (chooseMat < 0.8f) {  // diffuse
-          resources.materials.push_back(std::make_unique<Lambertian>(glm::vec3{
-              randf() * randf(), randf() * randf(), randf() * randf()}));
-          resources.spheres.emplace_back(center, 0.2f,
-                                         *resources.materials.back());
-        } else if (chooseMat < 0.95f) {  // metal
-          resources.materials.push_back(std::make_unique<Metal>(
-              glm::vec3{0.5f * (1.0f + randf()), 0.5f * (1.0f + randf()),
-                        0.5f * (1.0f + randf())},
-              0.5f * randf()));
-          resources.spheres.emplace_back(center, 0.2f,
-                                         *resources.materials.back());
-        } else {  // glass
-          resources.materials.push_back(std::make_unique<Dielectric>(1.5f));
-          resources.spheres.emplace_back(center, 0.2f,
-                                         *resources.materials.back());
-        }
-      }
-    }
-
-    resources.materials.push_back(std::make_unique<Dielectric>(1.5f));
-    resources.spheres.emplace_back(glm::vec3{0.0f, 1.0f, 0.0f}, 1.0f,
-                                   *resources.materials.back());
-
-    resources.materials.push_back(
-        std::make_unique<Lambertian>(glm::vec3{0.4f, 0.2f, 0.1f}));
-    resources.spheres.emplace_back(glm::vec3{-4.0f, 1.0f, 0.0f}, 1.0f,
-                                   *resources.materials.back());
-
-    resources.materials.push_back(
-        std::make_unique<Metal>(glm::vec3{0.7f, 0.6f, 0.5f}, 0.0f));
-    resources.spheres.emplace_back(glm::vec3{4.0f, 1.0f, 0.0f}, 1.0f,
-                                   *resources.materials.back());
-  }
-
-  HitableList list;
-  for (const auto& sphere : resources.spheres) {
-    list.append(sphere);
-  }
-  return list;
-}
-
-using Seconds = std::chrono::duration<float>;
-
-template <class Func>
-auto measure(Func&& f) {
-  auto before = std::chrono::high_resolution_clock::now();
-  f();
-  auto after = std::chrono::high_resolution_clock::now();
-
-  Seconds duration = after - before;
-  return duration.count();
-}
-
 int main() {
   using MyRandom::randf;
 
-  const int width = 1024, height = 768;
-  const int samplesPerPixel = 256;
+  const int width = 200, height = 100;
+  const int samplesPerPixel = 64;
 
-  SceneResources res;
-  HitableList world = randomScene(res);
+  Scene scene = SceneGeneration::randomSpheres();
 
   glm::vec3 lookFrom{7.0f, 1.5f, 2.5f};
   glm::vec3 lookAt{0.0f, 0.0f, 0.0f};
@@ -152,7 +74,8 @@ int main() {
           float u = (float(x) + randf() - 0.5f) / float(width);
           float v = (float(y) + randf() - 0.5f) / float(height);
 
-          col += color(camera.getRay(u, v), world, 0) / float(samplesPerPixel);
+          col += color(camera.getRay(u, v), scene.getWorld(), 0) /
+                 float(samplesPerPixel);
         }
         // gamma-correction
         col = glm::sqrt(col);
@@ -176,7 +99,7 @@ int main() {
     }
   };
 
-  float renderingTimeInSeconds = measure([&]() {
+  float renderingTimeInSeconds = measureTime([&]() {
     constexpr int threadsCount = 4;
 
     std::thread renderThreads[threadsCount];

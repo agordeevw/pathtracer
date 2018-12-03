@@ -2,7 +2,7 @@
 #include <glm/vec3.hpp>
 
 #include "Materials/Dielectric.h"
-#include "Scene/Hitables/Hitable.h"
+#include "Hitables/Hitable.h"
 #include "Util/MyRandom.h"
 #include "Ray.h"
 

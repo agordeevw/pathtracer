@@ -3,8 +3,12 @@
 
 #include <glm/geometric.hpp>
 
-#include "Scene/Camera.h"
+#include "Camera.h"
 #include "Util/MyRandom.h"
+
+Camera::Camera()
+    : Camera(glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, -1.0f},
+             glm::vec3{0.0f, 1.0f, 0.0f}, 45.0f, 4.0f / 3.0f, 0.5f, 1.0f) {}
 
 Camera::Camera(const glm::vec3& lookFrom, const glm::vec3& lookAt,
                const glm::vec3& up, float verticalFov, float aspectRatio,

@@ -5,7 +5,9 @@ struct HitRecord;
 class Ray;
 
 class Material {
-public:
+ public:
+  virtual ~Material() = default;
+
   virtual bool scatter(const Ray& rayIn, const HitRecord& rec,
-    glm::vec3& attenuation, Ray& scattered) const = 0;
+                       glm::vec3& attenuation, Ray& scattered) const = 0;
 };

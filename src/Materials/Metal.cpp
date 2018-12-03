@@ -1,7 +1,7 @@
 #include <glm/geometric.hpp>
 
 #include "Materials/Metal.h"
-#include "Scene/Hitables/Hitable.h"
+#include "Hitables/Hitable.h"
 #include "Util/MyRandom.h"
 #include "Ray.h"
 

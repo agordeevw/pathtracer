@@ -5,6 +5,8 @@
 
 class Camera {
  public:
+  Camera();
+
   Camera(const glm::vec3& lookFrom, const glm::vec3& lookAt,
          const glm::vec3& up, float verticalFov, float aspectRatio,
          float aperture, float focusDist);

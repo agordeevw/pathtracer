@@ -1,7 +1,7 @@
 #include <glm/geometric.hpp>
 
 #include "Ray.h"
-#include "Scene/Hitables/Sphere.h"
+#include "Hitables/Sphere.h"
 
 Sphere::Sphere(const glm::vec3& center, float radius, const Material& material)
     : center(center), radius(radius), material(&material) {}
