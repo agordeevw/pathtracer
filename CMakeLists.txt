@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-set (PROJECT_NAME rtiow)
+set (PROJECT_NAME pathtracer)
 project(${PROJECT_NAME})
 
 include(ExternalProject)
