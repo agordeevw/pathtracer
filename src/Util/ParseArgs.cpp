@@ -1,6 +1,6 @@
 #include <cxxopts.hpp>
 
-#include "Util/ParseCommandLineArgs.h"
+#include "Util/ParseArgs.h"
 
 namespace Util {
 namespace ParseArgs {

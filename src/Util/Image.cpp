@@ -16,8 +16,8 @@ void Image::setPixel(int x, int y, glm::u8vec3 color) {
   }
 }
 
-void Image::writeToFile(const char* filename) {
+bool Image::writeToFile(const char* filename) {
   stbi_flip_vertically_on_write(1);
-  stbi_write_bmp(filename, width, height, 3, data.data());
+  return stbi_write_bmp(filename, width, height, 3, data.data());
 }
 }  // namespace Util

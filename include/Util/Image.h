@@ -10,7 +10,7 @@ class Image {
 
   void setPixel(int x, int y, glm::u8vec3 color);
 
-  void writeToFile(const char* filename);
+  bool writeToFile(const char* filename);
 
  private:
   std::vector<glm::u8vec3> data;
