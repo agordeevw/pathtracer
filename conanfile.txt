@@ -1,6 +1,7 @@
 [requires]
 stb/20180214@conan/stable
 glm/0.9.9.1@g-truc/stable
+jsonformoderncpp/3.4.0@vthiery/stable
 
 [options]
 

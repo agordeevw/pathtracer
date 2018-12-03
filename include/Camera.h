@@ -3,13 +3,19 @@
 
 #include "Ray.h"
 
+struct CameraParameters {
+  glm::vec3 lookFrom;
+  glm::vec3 lookAt;
+  glm::vec3 up;
+  float fov;
+  float aspectRatio;
+  float aperture;
+  float focusDist;
+};
+
 class Camera {
  public:
-  Camera();
-
-  Camera(const glm::vec3& lookFrom, const glm::vec3& lookAt,
-         const glm::vec3& up, float verticalFov, float aspectRatio,
-         float aperture, float focusDist);
+  Camera(const CameraParameters& params);
 
   Ray getRay(float s, float t) const;
 

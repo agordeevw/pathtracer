@@ -6,24 +6,19 @@
 #include "Camera.h"
 #include "Util/MyRandom.h"
 
-Camera::Camera()
-    : Camera(glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, -1.0f},
-             glm::vec3{0.0f, 1.0f, 0.0f}, 45.0f, 4.0f / 3.0f, 0.5f, 1.0f) {}
-
-Camera::Camera(const glm::vec3& lookFrom, const glm::vec3& lookAt,
-               const glm::vec3& up, float verticalFov, float aspectRatio,
-               float aperture, float focusDist) {
-  lensRadius = aperture * 0.5f;
-  float theta = verticalFov * float(M_PI) / 180.0f;
+Camera::Camera(const CameraParameters& params) {
+  lensRadius = params.aperture * 0.5f;
+  float theta = params.fov * float(M_PI) / 180.0f;
   float halfHeight = tanf(theta * 0.5f);
-  float halfWidth = aspectRatio * halfHeight;
-  origin = lookFrom;
-  w = glm::normalize(lookFrom - lookAt);
-  u = glm::normalize(glm::cross(up, w));
+  float halfWidth = params.aspectRatio * halfHeight;
+  origin = params.lookFrom;
+  w = glm::normalize(params.lookFrom - params.lookAt);
+  u = glm::normalize(glm::cross(params.up, w));
   v = glm::cross(w, u);
-  lowerLeftCorner = origin - focusDist * (halfWidth * u + halfHeight * v + w);
-  horizontal = 2.0f * halfWidth * focusDist * u;
-  vertical = 2.0f * halfHeight * focusDist * v;
+  lowerLeftCorner =
+      origin - params.focusDist * (halfWidth * u + halfHeight * v + w);
+  horizontal = 2.0f * halfWidth * params.focusDist * u;
+  vertical = 2.0f * halfHeight * params.focusDist * v;
 }
 
 Ray Camera::getRay(float s, float t) const {

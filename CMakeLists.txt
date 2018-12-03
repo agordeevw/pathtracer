@@ -3,9 +3,18 @@ cmake_minimum_required(VERSION 2.6)
 set (PROJECT_NAME RTiOW)
 project(${PROJECT_NAME})
 
+include(ExternalProject)
+ExternalProject_Add(
+  cxxopts
+  URL https://github.com/jarro2783/cxxopts/archive/v2.1.1.zip
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/cxxopts
+  INSTALL_COMMAND "")
+ExternalProject_Get_Property(cxxopts SOURCE_DIR)
+set (CXXOPTS_SOURCE_DIR ${SOURCE_DIR})
+  
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
-include_directories("include")
+include_directories("include" "${CXXOPTS_SOURCE_DIR}/include")
 file(GLOB_RECURSE SOURCES "src/*.cpp" "include/*.h")
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
