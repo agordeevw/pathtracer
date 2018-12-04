@@ -4,15 +4,15 @@
     "lookAt" : [0.0, 0.0, 0.0],
     "up" : [0.0, 1.0, 0.0],
     "fov" : 45.0,
-    "aspectRatio" : 1.3333333333333,
+    "aspectRatio" : 2.0,
     "aperture" : 0.1,
     "focusDist" : 57.5,
     "shutterOpenTime" : 0.0,
-    "shutterCloseTime" : 0.0
+    "shutterCloseTime" : 1.0
   },
   "tracingParameters" : {
-    "imageWidth" : 200,
-    "imageHeight" : 150,
+    "imageWidth" : 400,
+    "imageHeight" : 200,
     "samplesPerPixel" : 64
   }
 }

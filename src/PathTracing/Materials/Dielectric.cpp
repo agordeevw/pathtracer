@@ -44,12 +44,12 @@ bool Dielectric::scatter(const Ray& rayIn, const HitRecord& rec,
   if (refracted != glm::vec3{0.0f}) {
     float reflectionProba = schlick(cosine, reflectiveIdx);
     if (randf() < reflectionProba) {
-      scattered = Ray{rec.point, reflected};
+      scattered = Ray{rec.point, reflected, rayIn.time};
     } else {
-      scattered = Ray{rec.point, refracted};
+      scattered = Ray{rec.point, refracted, rayIn.time};
     }
   } else {
-    scattered = Ray{rec.point, reflected};
+    scattered = Ray{rec.point, reflected, rayIn.time};
   }
   return true;
 }
