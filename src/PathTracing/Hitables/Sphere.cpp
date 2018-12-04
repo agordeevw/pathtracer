@@ -1,5 +1,6 @@
 #include <glm/geometric.hpp>
 
+#include "PathTracing/AABB.h"
 #include "PathTracing/Hitables/Sphere.h"
 #include "PathTracing/Ray.h"
 
@@ -33,6 +34,12 @@ bool Sphere::hit(const Ray& r, float tMin, float tMax, HitRecord& rec) const {
     }
   }
   return false;
+}
+
+bool Sphere::boundingBox(float t0, float t1, AABB& box) const {
+  box = AABB{center - glm::vec3{radius, radius, radius},
+             center + glm::vec3{radius, radius, radius}};
+  return true;
 }
 }  // namespace Hitables
 }  // namespace PathTracing

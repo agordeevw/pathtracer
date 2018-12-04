@@ -13,6 +13,7 @@ class MovingSphere : public Hitable {
   ~MovingSphere() = default;
 
   bool hit(const Ray& r, float tMin, float tMax, HitRecord& rec) const override;
+  bool boundingBox(float t0, float t1, AABB& box) const override;
 
   glm::vec3 centerAtTime(float time) const;
 

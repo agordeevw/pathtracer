@@ -1,4 +1,5 @@
 #include "PathTracing/Hitables/HitableList.h"
+#include "PathTracing/AABB.h"
 
 namespace PathTracing {
 namespace Hitables {
@@ -20,6 +21,22 @@ bool HitableList::hit(const Ray& r, float tMin, float tMax,
     }
   }
   return hitAnything;
+}
+
+bool HitableList::boundingBox(float t0, float t1, AABB& box) const {
+  if (hitables.empty()) return false;
+  AABB tempBox;
+  if (hitables[0]->boundingBox(t0, t1, tempBox))
+    box = tempBox;
+  else
+    return false;
+  for (int i = 1; i < hitables.size(); i++) {
+    if (hitables[i]->boundingBox(t0, t1, tempBox))
+      box = AABB::surroundingBox(box, tempBox);
+    else
+      return false;
+  }
+  return true;
 }
 }  // namespace Hitables
 }  // namespace PathTracing

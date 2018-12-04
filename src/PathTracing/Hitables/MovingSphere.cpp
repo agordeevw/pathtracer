@@ -1,6 +1,7 @@
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
+#include "PathTracing/AABB.h"
 #include "PathTracing/Hitables/MovingSphere.h"
 #include "PathTracing/Ray.h"
 
@@ -43,6 +44,15 @@ bool MovingSphere::hit(const Ray& r, float tMin, float tMax,
     }
   }
   return false;
+}
+
+bool MovingSphere::boundingBox(float t0, float t1, AABB& box) const {
+  AABB startBox{centerAtTime(t0) - glm::vec3{radius, radius, radius},
+                centerAtTime(t0) + glm::vec3{radius, radius, radius}};
+  AABB finishBox{centerAtTime(t1) - glm::vec3{radius, radius, radius},
+                 centerAtTime(t1) + glm::vec3{radius, radius, radius}};
+  box = AABB::surroundingBox(startBox, finishBox);
+  return true;
 }
 
 glm::vec3 MovingSphere::centerAtTime(float time) const {
