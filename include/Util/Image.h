@@ -6,6 +6,7 @@
 namespace Util {
 class Image {
  public:
+  Image() = default;
   Image(int width, int height);
 
   void setPixel(int x, int y, glm::u8vec3 color);

@@ -17,7 +17,12 @@ void Image::setPixel(int x, int y, glm::u8vec3 color) {
 }
 
 bool Image::writeToFile(const char* filename) {
-  stbi_flip_vertically_on_write(1);
-  return stbi_write_bmp(filename, width, height, 3, data.data());
+  if (width > 0 && height > 0 && data.size() == width * height * 3) {
+    stbi_flip_vertically_on_write(1);
+    return stbi_write_bmp(filename, width, height, 3, data.data());
+
+  } else {
+    return false;
+  }
 }
 }  // namespace Util

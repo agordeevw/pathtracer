@@ -6,6 +6,7 @@
 #include "PathTracing/Scene.h"
 #include "PathTracingApplication.h"
 #include "Util/SceneGeneration.h"
+#include "Util/TimeMeasure.h"
 
 PathTracingApplication::PathTracingApplication(const std::string& inputFilePath,
                                                int threadCount) {
@@ -21,11 +22,14 @@ PathTracingApplication::PathTracingApplication(const std::string& inputFilePath,
 void PathTracingApplication::run(const std::string& outputFile) {
   PathTracing::Scene scene = Util::SceneGeneration::randomMovingSpheres();
   PathTracing::Camera camera{cameraParams};
+  Util::Image image{};
 
   std::cout << "Tracing...\n";
-  Util::Image image = PathTracing::traceScene(scene, camera, tracingParams);
+  float traceTime = Util::measureExecutionTime([this, &scene, &camera, &image]() {
+    image = PathTracing::traceScene(scene, camera, tracingParams);
+  });
+  std::cout << "Done after " << traceTime << " s.\n";
 
-  std::cout << "Done.\n";
   if (!image.writeToFile(outputFile.c_str())) {
     throw std::runtime_error("Failed to write image to file \"" + outputFile);
   }
