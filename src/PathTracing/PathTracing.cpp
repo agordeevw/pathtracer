@@ -41,6 +41,8 @@ Util::Image traceScene(const Scene& scene, const Camera& camera,
                        const TracingParameters& params) {
   using Util::Random::randf;
 
+  scene.buildBVH(camera.getShutterOpenTime(), camera.getShutterCloseTime());
+
   Util::Image image(params.imageWidth, params.imageHeight);
 
   auto renderTile = [&scene, &camera, &image, &params](int startX, int startY,

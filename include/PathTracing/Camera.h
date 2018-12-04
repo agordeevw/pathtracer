@@ -21,6 +21,8 @@ class Camera {
   Camera(const CameraParameters& params);
 
   Ray getRay(float s, float t) const;
+  float getShutterOpenTime() const { return shutterOpenTime; }
+  float getShutterCloseTime() const { return shutterCloseTime; }
 
  private:
   glm::vec3 origin;

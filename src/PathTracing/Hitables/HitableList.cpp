@@ -3,9 +3,7 @@
 
 namespace PathTracing {
 namespace Hitables {
-void HitableList::append(const Hitable& hitable) {
-  hitables.push_back(&hitable);
-}
+void HitableList::append(Hitable& hitable) { hitables.push_back(&hitable); }
 
 bool HitableList::hit(const Ray& r, float tMin, float tMax,
                       HitRecord& rec) const {

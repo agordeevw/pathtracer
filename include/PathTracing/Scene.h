@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "PathTracing/Hitable.h"
+#include "PathTracing/Hitables/BVH.h"
 #include "PathTracing/Hitables/HitableList.h"
 #include "PathTracing/Material.h"
 
@@ -22,15 +23,21 @@ class Scene {
   template <class T, class... Args>
   const Hitable& createHitable(Args&&... args) {
     hitablesStorage.push_back(std::make_unique<T>(std::forward<Args>(args)...));
-    world.append(*hitablesStorage.back());
+    hitables.push_back(hitablesStorage.back().get());
     return *hitablesStorage.back();
   }
 
-  const Hitables::HitableList& getWorld() const { return world; }
+  void buildBVH(float time0, float time1) const {
+    bvh = Hitables::BVH{hitables.data(), hitables.data() + hitables.size(),
+                        time0, time1};
+  }
+
+  const Hitable& getWorld() const { return bvh; }
 
  private:
-  Hitables::HitableList world;
   std::vector<std::unique_ptr<Material>> materialsStorage;
   std::vector<std::unique_ptr<Hitable>> hitablesStorage;
+  mutable std::vector<Hitable*> hitables;
+  mutable Hitables::BVH bvh;
 };
 }  // namespace PathTracing

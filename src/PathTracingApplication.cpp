@@ -25,9 +25,10 @@ void PathTracingApplication::run(const std::string& outputFile) {
   Util::Image image{};
 
   std::cout << "Tracing...\n";
-  float traceTime = Util::measureExecutionTime([this, &scene, &camera, &image]() {
-    image = PathTracing::traceScene(scene, camera, tracingParams);
-  });
+  float traceTime =
+      Util::measureExecutionTime([this, &scene, &camera, &image]() {
+        image = PathTracing::traceScene(scene, camera, tracingParams);
+      });
   std::cout << "Done after " << traceTime << " s.\n";
 
   if (!image.writeToFile(outputFile.c_str())) {
@@ -93,8 +94,8 @@ void PathTracingApplication::validateParameters() {
   if (tracingParams.threadsCount < 1)
     throw std::runtime_error("Threads count < 1");
 
-  if (cameraParams.aperture <= 0.0f)
-    throw std::runtime_error("Camera aperture is zero or negative");
+  if (cameraParams.aperture < 0.0f)
+    throw std::runtime_error("Camera aperture is negative");
   if (cameraParams.aspectRatio <= 0.0f)
     throw std::runtime_error("Camera aspect ratio is zero or negative");
   if (cameraParams.focusDist <= 0.0f)

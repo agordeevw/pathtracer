@@ -1,5 +1,6 @@
-#include <glm/geometric.hpp>
+#pragma once
 #include <glm/vec3.hpp>
+
 #include "PathTracing/Ray.h"
 
 namespace PathTracing {

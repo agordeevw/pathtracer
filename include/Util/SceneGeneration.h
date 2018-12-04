@@ -3,6 +3,7 @@
 
 namespace Util {
 namespace SceneGeneration {
+PathTracing::Scene threeSpheres();
 PathTracing::Scene randomSpheres();
 PathTracing::Scene randomMovingSpheres();
 }  // namespace SceneGeneration

@@ -12,7 +12,29 @@
 
 namespace Util {
 namespace SceneGeneration {
-PathTracing::Scene SceneGeneration::randomSpheres() {
+PathTracing::Scene threeSpheres() {
+  using namespace PathTracing;
+
+  Scene scene;
+
+  const auto& red =
+      scene.createMaterial<Materials::Lambertian>(glm::vec3{1.0f, 0.0f, 0.0f});
+  const auto& blue =
+      scene.createMaterial<Materials::Lambertian>(glm::vec3{0.0f, 0.0f, 1.0f});
+  const auto& metal =
+      scene.createMaterial<Materials::Metal>(glm::vec3{0.7f, 0.6f, 0.5f}, 0.1f);
+
+  scene.createHitable<Hitables::Sphere>(glm::vec3{-2.0f, 0.0f, 0.0f}, 2.0f,
+                                        metal);
+  scene.createHitable<Hitables::Sphere>(glm::vec3{4.0f, 0.0f, 0.0f}, 1.0f,
+                                        blue);
+  scene.createHitable<Hitables::Sphere>(glm::vec3{2.0f, -0.5f, 0.0f}, 0.5f,
+                                        red);
+
+  return scene;
+}
+
+PathTracing::Scene randomSpheres() {
   using Util::Random::randf;
   using namespace PathTracing;
 
@@ -62,7 +84,7 @@ PathTracing::Scene SceneGeneration::randomSpheres() {
   return scene;
 }
 
-PathTracing::Scene SceneGeneration::randomMovingSpheres() {
+PathTracing::Scene randomMovingSpheres() {
   using Util::Random::randf;
   using namespace PathTracing;
 

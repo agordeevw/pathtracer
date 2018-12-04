@@ -1,3 +1,5 @@
+#include <glm/geometric.hpp>
+
 #include "PathTracing/AABB.h"
 
 namespace PathTracing {
@@ -14,7 +16,7 @@ bool AABB::hit(const Ray& r, float tmin, float tmax) const {
       if (t0 > t1) {
         float tmp = t0;
         t0 = t1;
-        t1 = t0;
+        t1 = tmp;
       }
       tmin = t0 > tmin ? t0 : tmin;
       tmax = t1 < tmax ? t1 : tmax;
