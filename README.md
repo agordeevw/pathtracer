@@ -14,11 +14,24 @@ cmake ..
 cmake --build .
 ```
 
-Progress:
-* "Raytracing in One Weekend" is implemented. Final result:
+# Progress:
 
-![RTiOW final result](https://github.com/agordeevw/rtiow/blob/master/rtiow.png)
+## "Raytracing in One Weekend"
 
-* "Raytracing: The Next Week" in progress.
+Done.
 
-* "Raytracing: The Rest Of Your Life" pending.
+Final result:
+![RTIOW-final](https://github.com/agordeevw/pathtracer/blob/master/images/RTIOW-final.png)
+
+## "Raytracing: The Next Week"
+
+In progress.
+
+Motion blur + BVH:
+![MotionBlur-BVH](https://github.com/agordeevw/pathtracer/blob/master/images/MotionBlur-BVH.png)
+
+Slightly flawed method of scene generation resulted in two spheres right at the center merging together. Rendering this image with 512 samples per pixel using BVH took ~1000 seconds on my laptop's CPU (i5-4200U). Also glass spheres confuse me :|
+
+## "Raytracing: The Rest Of Your Life"
+
+Pending.
