@@ -12,6 +12,8 @@ struct CameraParameters {
   float aspectRatio;
   float aperture;
   float focusDist;
+  float shutterOpenTime;
+  float shutterCloseTime;
 };
 
 class Camera {
@@ -27,5 +29,7 @@ class Camera {
   glm::vec3 vertical;
   glm::vec3 u, v, w;
   float lensRadius;
+  float shutterOpenTime;
+  float shutterCloseTime;
 };
 }  // namespace PathTracing

@@ -20,12 +20,17 @@ Camera::Camera(const CameraParameters& params) {
       origin - params.focusDist * (halfWidth * u + halfHeight * v + w);
   horizontal = 2.0f * halfWidth * params.focusDist * u;
   vertical = 2.0f * halfHeight * params.focusDist * v;
+  shutterOpenTime = params.shutterOpenTime;
+  shutterCloseTime = params.shutterCloseTime;
 }
 
 Ray Camera::getRay(float s, float t) const {
   glm::vec3 rd = lensRadius * Util::Random::randInUnitDisk();
   glm::vec3 offset = u * rd.x + v * rd.y;
-  return {origin + offset,
-          lowerLeftCorner + s * horizontal + t * vertical - (origin + offset)};
+  glm::vec3 rayOrigin = origin + offset;
+  float rayTime = shutterOpenTime +
+                  (shutterCloseTime - shutterOpenTime) * Util::Random::randf();
+  return {rayOrigin,
+          lowerLeftCorner + s * horizontal + t * vertical - rayOrigin, rayTime};
 }
 }  // namespace PathTracing

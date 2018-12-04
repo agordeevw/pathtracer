@@ -61,6 +61,10 @@ void PathTracingApplication::parseInputJson(const Json& j) {
     cameraParams.aspectRatio = jCameraParams["aspectRatio"].get<float>();
     cameraParams.aperture = jCameraParams["aperture"].get<float>();
     cameraParams.focusDist = jCameraParams["focusDist"].get<float>();
+    cameraParams.shutterOpenTime =
+        jCameraParams["shutterOpenTime"].get<float>();
+    cameraParams.shutterCloseTime =
+        jCameraParams["shutterCloseTime"].get<float>();
 
     auto& jTracingParams = j["tracingParameters"];
     tracingParams.imageWidth = jTracingParams["imageWidth"].get<int>();
@@ -94,4 +98,7 @@ void PathTracingApplication::validateParameters() {
   if (cameraParams.fov <= 0.0f || cameraParams.fov >= 180.0f)
     throw std::runtime_error(
         "Camera vertical fov is not in interval (0.0, 180.0)");
+  if (cameraParams.shutterCloseTime < cameraParams.shutterOpenTime)
+    throw std::runtime_error(
+        "Camera shutter close time is earlier that open time");
 }

@@ -26,5 +26,5 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_STANDARD 17
   CXX_STANDARD_REQUIRED YES
   CXX_EXTENSIONS NO)
+add_dependencies(${PROJECT_NAME} cxxopts)
 target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
-
