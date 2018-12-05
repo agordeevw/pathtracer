@@ -7,12 +7,8 @@
 
 namespace PathTracing {
 namespace Materials {
-Metal::Metal(const glm::vec3& albedo, float fuzziness) : albedo(albedo) {
-  if (fuzziness < 1.0f)
-    fuzziness = fuzziness;
-  else
-    fuzziness = 1.0f;
-}
+Metal::Metal(const glm::vec3& albedo, float fuzziness)
+    : albedo(albedo), fuzziness(std::min(std::max(fuzziness, 0.0f), 1.0f)) {}
 
 bool Metal::scatter(const Ray& rayIn, const HitRecord& rec,
                     glm::vec3& attenuation, Ray& scattered) const {
