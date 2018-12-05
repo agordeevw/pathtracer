@@ -11,8 +11,8 @@
     "shutterCloseTime" : 1.0
   },
   "tracingParameters" : {
-    "imageWidth" : 400,
-    "imageHeight" : 200,
+    "imageWidth" : 200,
+    "imageHeight" : 100,
     "samplesPerPixel" : 64
   }
 }

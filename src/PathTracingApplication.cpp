@@ -20,7 +20,7 @@ PathTracingApplication::PathTracingApplication(const std::string& inputFilePath,
 }
 
 void PathTracingApplication::run(const std::string& outputFile) {
-  PathTracing::Scene scene = Util::SceneGeneration::randomMovingSpheres();
+  PathTracing::Scene scene = Util::SceneGeneration::threeSpheres();
   PathTracing::Camera camera{cameraParams};
   Util::Image image{};
 
