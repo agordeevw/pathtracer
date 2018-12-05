@@ -11,8 +11,8 @@
       },
       {
         "type" : "metal",
-        "albedo" : [0.3, 0.7, 0.2],
-        "fuzziness" : 0.1
+        "albedo" : [0.5, 0.7, 0.6],
+        "fuzziness" : 0.05
       },
       {
         "type" : "dielectric",
@@ -64,14 +64,14 @@
     "lookAt" : [0.0, 0.0, 0.0],
     "up" : [0.0, 1.0, 0.0],
     "fov" : 45.0,
-    "aperture" : 0.1,
+    "aperture" : 0.01,
     "focusDist" : 57.5,
     "shutterOpenTime" : 0.0,
     "shutterCloseTime" : 1.0
   },
   "tracingParameters" : {
-    "imageWidth" : 200,
-    "imageHeight" : 100,
-    "samplesPerPixel" : 64
+    "imageWidth" : 400,
+    "imageHeight" : 400,
+    "samplesPerPixel" : 128
   }
 }
