@@ -17,6 +17,10 @@
       {
         "type" : "dielectric",
         "reflectiveIdx" : 1.5
+      },
+      {
+        "type" : "lambertian",
+        "albedo" : [0.8, 0.8, 0.0]
       }
     ], 
     "hitables": [
@@ -43,6 +47,15 @@
         "center" : [0.0, 2.0, 0.5],
         "radius" : 0.7,
         "material" : 3
+      },
+      {
+        "type" : "moving sphere",
+        "start center" : [0.0, 0.5, -1.0],
+        "finish center" : [0.0, 1.0, -3.0],
+        "start time" : 0.0,
+        "finish time" : 1.0,
+        "radius" : 0.5,
+        "material" : 4
       }
     ]
   },
