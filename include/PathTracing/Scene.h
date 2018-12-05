@@ -23,11 +23,14 @@ class Scene {
   template <class T, class... Args>
   const Hitable& createHitable(Args&&... args) {
     hitablesStorage.push_back(std::make_unique<T>(std::forward<Args>(args)...));
-    hitables.push_back(hitablesStorage.back().get());
     return *hitablesStorage.back();
   }
 
   void buildBVH(float time0, float time1) const {
+    std::vector<Hitable*> hitables;
+    for (auto& hitablePtr : hitablesStorage) {
+      hitables.push_back(hitablePtr.get());
+    }
     bvh = Hitables::BVH{hitables.data(), hitables.data() + hitables.size(),
                         time0, time1};
   }
@@ -37,7 +40,6 @@ class Scene {
  private:
   std::vector<std::unique_ptr<Material>> materialsStorage;
   std::vector<std::unique_ptr<Hitable>> hitablesStorage;
-  mutable std::vector<Hitable*> hitables;
   mutable Hitables::BVH bvh;
 };
 }  // namespace PathTracing

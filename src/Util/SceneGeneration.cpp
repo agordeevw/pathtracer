@@ -12,7 +12,8 @@
 
 namespace Util {
 namespace SceneGeneration {
-PathTracing::Scene threeSpheres() {
+namespace {
+PathTracing::Scene debugScene() {
   using namespace PathTracing;
 
   Scene scene;
@@ -135,5 +136,19 @@ PathTracing::Scene randomMovingSpheres() {
 
   return scene;
 }
+}  // namespace
+
+PathTracing::Scene generateScene(const std::string& name) {
+  if (name == "debugScene") {
+    return debugScene();
+  } else if (name == "randomSpheres") {
+    return randomSpheres();
+  } else if (name == "randomMovingSpheres") {
+    return randomMovingSpheres();
+  } else {
+    throw std::logic_error("Unknown scene name");
+  }
+}
+
 }  // namespace SceneGeneration
 }  // namespace Util

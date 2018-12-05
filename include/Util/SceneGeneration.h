@@ -1,10 +1,10 @@
 #pragma once
+#include <string>
+
 #include "PathTracing/Scene.h"
 
 namespace Util {
 namespace SceneGeneration {
-PathTracing::Scene threeSpheres();
-PathTracing::Scene randomSpheres();
-PathTracing::Scene randomMovingSpheres();
+PathTracing::Scene generateScene(const std::string& name);
 }  // namespace SceneGeneration
 }  // namespace Util

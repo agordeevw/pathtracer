@@ -20,4 +20,5 @@ class PathTracingApplication {
 
   PathTracing::TracingParameters tracingParams;
   PathTracing::CameraParameters cameraParams;
+  std::string sceneToGenerate;
 };

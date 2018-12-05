@@ -20,7 +20,8 @@ PathTracingApplication::PathTracingApplication(const std::string& inputFilePath,
 }
 
 void PathTracingApplication::run(const std::string& outputFile) {
-  PathTracing::Scene scene = Util::SceneGeneration::threeSpheres();
+  PathTracing::Scene scene =
+      Util::SceneGeneration::generateScene(sceneToGenerate);
   PathTracing::Camera camera{cameraParams};
   Util::Image image{};
 
@@ -55,6 +56,8 @@ void PathTracingApplication::loadJsonFromFile(const std::string& path,
 
 void PathTracingApplication::parseInputJson(const Json& j) {
   try {
+    sceneToGenerate = j["scene"].get<std::string>();
+
     auto& jCameraParams = j["cameraParameters"];
     for (int i = 0; i < 3; i++)
       cameraParams.lookFrom[i] = jCameraParams["lookFrom"][i].get<float>();
