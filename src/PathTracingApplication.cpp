@@ -41,7 +41,6 @@ void parseCameraParams(const Json& j,
     for (int i = 0; i < 3; i++)
       cameraParams.up[i] = jCameraParams["up"][i].get<float>();
     cameraParams.fov = jCameraParams["fov"].get<float>();
-    cameraParams.aspectRatio = jCameraParams["aspectRatio"].get<float>();
     cameraParams.aperture = jCameraParams["aperture"].get<float>();
     cameraParams.focusDist = jCameraParams["focusDist"].get<float>();
     cameraParams.shutterOpenTime =
@@ -56,8 +55,6 @@ void parseCameraParams(const Json& j,
 
   if (cameraParams.aperture < 0.0f)
     throw std::runtime_error("Camera aperture is negative");
-  if (cameraParams.aspectRatio <= 0.0f)
-    throw std::runtime_error("Camera aspect ratio is zero or negative");
   if (cameraParams.focusDist <= 0.0f)
     throw std::runtime_error("Camera focus distance is zero or negative");
   if (cameraParams.fov <= 0.0f || cameraParams.fov >= 180.0f)
@@ -168,6 +165,8 @@ PathTracingApplication::PathTracingApplication(const std::string& inputFilePath,
                                                int threadCount) {
   tracingParams.threadsCount = threadCount;
   loadDescription(inputFilePath);
+  cameraParams.aspectRatio =
+      (float)tracingParams.imageWidth / (float)tracingParams.imageHeight;
 }
 
 void PathTracingApplication::run(const std::string& outputFile) {

@@ -64,7 +64,6 @@
     "lookAt" : [0.0, 0.0, 0.0],
     "up" : [0.0, 1.0, 0.0],
     "fov" : 45.0,
-    "aspectRatio" : 2.0,
     "aperture" : 0.1,
     "focusDist" : 57.5,
     "shutterOpenTime" : 0.0,
