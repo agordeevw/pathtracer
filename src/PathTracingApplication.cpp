@@ -11,7 +11,6 @@
 #include "PathTracing/Materials/Metal.h"
 #include "PathTracing/Scene.h"
 #include "PathTracingApplication.h"
-#include "Util/SceneGeneration.h"
 #include "Util/TimeMeasure.h"
 
 using Json = nlohmann::json;
