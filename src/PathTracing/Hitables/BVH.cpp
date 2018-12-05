@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 
 #include "PathTracing/Hitables/BVH.h"
 #include "Util/Random.h"
@@ -21,7 +22,19 @@ BVH::BVHNode::BVHNode(Hitable* left, Hitable* right, float time0, float time1)
   AABB boxLeft{}, boxRight{};
   bool leftHasBox = left->boundingBox(time0, time1, boxLeft);
   bool rightHasBox = right->boundingBox(time0, time1, boxRight);
-  box = AABB::surroundingBox(boxLeft, boxRight);
+  if (leftHasBox && rightHasBox) {
+    box = AABB::surroundingBox(boxLeft, boxRight);
+  } else {
+    std::cerr << "Hitable doesn't have a bounding box\n";
+    if (leftHasBox) {
+      box = boxLeft;
+    } else if (rightHasBox) {
+      box = boxRight;
+    } else {
+      // box is reduced to a point, shouldn't be hit by most rays
+      box = {};
+    }
+  }
 }
 bool BVH::BVHNode::hit(const Ray& r, float tMin, float tMax,
                        HitRecord& rec) const {
@@ -50,21 +63,25 @@ BVH::BVHNode* BVH::createNode(Hitable** begin, Hitable** end, float time0,
                               float time1) {
   const auto n = end - begin;
 
+  if (n < 0) {
+    throw std::logic_error("Incorrect hitables range provided to BVH");
+  }
+
   int axis = int(3 * Util::Random::randf()) % 3;
   std::sort(begin, end,
             [time0, time1, axis](const Hitable* l, const Hitable* r) {
               AABB boxLeft{}, boxRight{};
               bool leftHasBox = l->boundingBox(time0, time1, boxLeft);
               bool rightHasBox = r->boundingBox(time0, time1, boxRight);
-              // NOTE: no error checking happens here
-              // what if hitables don't have bounding boxes?
+              // Will check for missing boxes at BVHNode ctor
+              // while creating the BVH tree
               return boxLeft.min[axis] < boxRight.min[axis];
             });
 
-  if (n == 1) {
-    nodes.emplace_back(begin[0], begin[0], time0, time1);
-  } else if (n == 2) {
-    nodes.emplace_back(begin[0], begin[1], time0, time1);
+  if (n < 3) {
+    // n == 1 -> n/2 = 0
+    // n == 2 -> n/2 = 1
+    nodes.emplace_back(begin[0], begin[n / 2], time0, time1);
   } else {
     auto median = begin + n / 2;
     BVH::BVHNode* leftNode = createNode(begin, median, time0, time1);
