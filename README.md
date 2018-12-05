@@ -32,6 +32,11 @@ Motion blur + BVH:
 
 Slightly flawed method of scene generation resulted in two spheres right at the center merging together. Rendering this image with 512 samples per pixel using BVH took ~1000 seconds on my laptop's CPU (i5-4200U). Also glass spheres confuse me :|
 
+Debug scene + scene loading from JSON:
+![DebugScene+SceneLoading](https://github.com/agordeevw/pathtracer/blob/master/images/DebugScene+SceneLoading.png)
+
+Implemented simple scene loader from JSON description files. Now I don't have to recompile when I want to slightly modify a scene. Less compilation - more happy feelings :)
+
 ## "Raytracing: The Rest Of Your Life"
 
 Pending.
