@@ -1,0 +1,65 @@
+{
+  "scene" : {
+    "materials": [
+      {
+        "type" : "lambertian",
+        "albedo" : [1.0, 0.0, 0.0]
+      },
+      {
+        "type" : "lambertian",
+        "albedo" : [0.0, 0.0, 1.0]
+      },
+      {
+        "type" : "metal",
+        "albedo" : [0.3, 0.7, 0.2],
+        "fuzziness" : 0.1
+      },
+      {
+        "type" : "dielectric",
+        "reflectiveIdx" : 1.5
+      }
+    ], 
+    "hitables": [
+      {
+        "type" : "sphere",
+        "center" : [2.0, -0.5, 2.0],
+        "radius" : 0.5,
+        "material" : 0
+      },
+      {
+        "type" : "sphere",
+        "center" : [4.0, 0.0, 0.0],
+        "radius" : 1.0,
+        "material" : 1
+      },
+      {
+        "type" : "sphere",
+        "center" : [-2.0, 0.0, 0.0],
+        "radius" : 2.0,
+        "material" : 2
+      },
+      {
+        "type" : "sphere",
+        "center" : [0.0, 2.0, 0.5],
+        "radius" : 0.7,
+        "material" : 3
+      }
+    ]
+  },
+  "cameraParameters" : {
+    "lookFrom" : [7.0, 1.5, 2.5],
+    "lookAt" : [0.0, 0.0, 0.0],
+    "up" : [0.0, 1.0, 0.0],
+    "fov" : 45.0,
+    "aspectRatio" : 2.0,
+    "aperture" : 0.1,
+    "focusDist" : 57.5,
+    "shutterOpenTime" : 0.0,
+    "shutterCloseTime" : 1.0
+  },
+  "tracingParameters" : {
+    "imageWidth" : 200,
+    "imageHeight" : 100,
+    "samplesPerPixel" : 64
+  }
+}

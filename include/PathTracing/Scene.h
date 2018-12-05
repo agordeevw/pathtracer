@@ -20,6 +20,13 @@ class Scene {
     return *materialsStorage.back();
   }
 
+  const Material& getMaterialById(int id) {
+    if (id >= 0 && id < materialsStorage.size())
+      return *materialsStorage[id].get();
+    else
+      throw std::runtime_error("Invalid material id");
+  }
+
   template <class T, class... Args>
   const Hitable& createHitable(Args&&... args) {
     hitablesStorage.push_back(std::make_unique<T>(std::forward<Args>(args)...));
