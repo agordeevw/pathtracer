@@ -21,18 +21,21 @@ cmake --build .
 Done.
 
 Final result:
+
 ![RTIOW-final](https://github.com/agordeevw/pathtracer/blob/master/images/RTIOW-final.png)
 
 ## "Raytracing: The Next Week"
 
 In progress.
 
-Motion blur + BVH:
+### Motion blur + BVH:
+
 ![MotionBlur-BVH](https://github.com/agordeevw/pathtracer/blob/master/images/MotionBlur-BVH.png)
 
 Slightly flawed method of scene generation resulted in two spheres right at the center merging together. Rendering this image with 512 samples per pixel using BVH took ~1000 seconds on my laptop's CPU (i5-4200U). Also glass spheres confuse me :|
 
-Debug scene + scene loading from JSON:
+### Debug scene + scene loading from JSON:
+
 ![DebugScene+SceneLoading](https://github.com/agordeevw/pathtracer/blob/master/images/DebugScene+SceneLoading.png)
 
 Implemented simple scene loader from JSON description files. Now I don't have to recompile when I want to slightly modify a scene. Less compilation - more happy feelings :)
