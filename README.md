@@ -40,6 +40,12 @@ Slightly flawed method of scene generation resulted in two spheres right at the 
 
 Implemented simple scene loader from JSON description files. Now I don't have to recompile when I want to slightly modify a scene. Less compilation - more happy feelings :)
 
+### Procedural textures (start) + 3D checker pattern
+
+![3D-checker](https://github.com/agordeevw/pathtracer/blob/master/images/Textures-3DChecker.png)
+
+3D-checker pattern works by combining two procedural textures. Right now only constant and checker textures are implemented. Scene description loader should check that texture references digraph is acyclic.
+
 ## "Raytracing: The Rest Of Your Life"
 
 Pending.
