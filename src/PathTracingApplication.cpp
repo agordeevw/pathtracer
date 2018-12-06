@@ -10,6 +10,7 @@
 #include "PathTracing/Materials/Lambertian.h"
 #include "PathTracing/Materials/Metal.h"
 #include "PathTracing/Scene.h"
+#include "PathTracing/Textures/CheckerTexture.h"
 #include "PathTracing/Textures/ConstantTexture.h"
 #include "PathTracingApplication.h"
 #include "Util/TimeMeasure.h"
@@ -102,6 +103,14 @@ void parseSceneTextures(const Json& jScene, PathTracing::Scene& scene) {
         glm::vec3 color;
         parseVec3(jTexture["color"], color);
         scene.createTexture<ConstantTexture>(color);
+      } else if (type == "checker") {
+        int evenTextureId = jTexture["even"].get<int>();
+        int oddTextureId = jTexture["odd"].get<int>();
+        // Major problem here: loader can only reference loaded textures
+        // Possible error in description file - reference loops
+        // How to prevent?
+        scene.createTexture<CheckerTexture>(scene.getTextureById(evenTextureId),
+                                            scene.getTextureById(oddTextureId));
       } else {
         throw std::runtime_error("Unknown texture type: " + type);
       }

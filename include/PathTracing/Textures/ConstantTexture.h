@@ -1,3 +1,4 @@
+#pragma once
 #include "PathTracing/Texture.h"
 
 namespace PathTracing {
