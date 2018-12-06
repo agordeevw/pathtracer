@@ -1,0 +1,54 @@
+{
+  "scene" : {
+    "textures" : [
+      {
+        "type" : "constant",
+        "color" : [0.2, 0.3, 0.1]
+      },
+      {
+        "type" : "constant",
+        "color" : [0.9, 0.9, 0.9]
+      },
+      {
+        "type" : "checker",
+        "even" : 0,
+        "odd" : 1
+      }
+    ],
+    "materials" : [
+      {
+        "type" : "lambertian",
+        "albedo" : 2
+      }
+    ],
+    "hitables" : [
+      {
+        "type" : "sphere",
+        "center" : [0.0, -10.0, 0.0],
+        "radius" : 10.0,
+        "material" : 0
+      },
+      {
+        "type" : "sphere",
+        "center" : [0.0, 10.0, 0.0],
+        "radius" : 10.0,
+        "material" : 0
+      }
+    ]
+  },
+  "cameraParameters" : {
+    "lookFrom" : [13.0, 2.0, 3.0],
+    "lookAt" : [0.0, 0.0, 0.0],
+    "up" : [0.0, 1.0, 0.0],
+    "fov" : 20.0,
+    "aperture" : 0.0,
+    "focusDist" : 10.0,
+    "shutterOpenTime" : 0.0,
+    "shutterCloseTime" : 0.0
+  },
+  "tracingParameters" : {
+    "imageWidth" : 400,
+    "imageHeight" : 400,
+    "samplesPerPixel" : 128
+  }
+}
