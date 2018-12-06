@@ -7,7 +7,7 @@
 
 namespace PathTracing {
 namespace Materials {
-Metal::Metal(const glm::vec3& albedo, float fuzziness)
+Metal::Metal(const Texture& albedo, float fuzziness)
     : albedo(albedo), fuzziness(std::min(std::max(fuzziness, 0.0f), 1.0f)) {}
 
 bool Metal::scatter(const Ray& rayIn, const HitRecord& rec,
@@ -17,7 +17,7 @@ bool Metal::scatter(const Ray& rayIn, const HitRecord& rec,
   scattered =
       Ray{rec.point, reflected + fuzziness * Util::Random::randInUnitSphere(),
           rayIn.time};
-  attenuation = albedo;
+  attenuation = albedo.sample(0, 0, rec.point);
   return glm::dot(scattered.direction, rec.normal) > 0.0f;
 }
 }  // namespace Materials

@@ -1,17 +1,35 @@
 {
   "scene" : {
+    "textures" : [
+      {
+        "type" : "constant",
+        "color" : [1.0, 0.0, 0.0]
+      },
+      {
+        "type" : "constant",
+        "color" : [0.0, 0.0, 1.0]
+      },
+      {
+        "type" : "constant",
+        "color" : [0.5, 0.7, 0.6]
+      },
+      {
+        "type" : "constant",
+        "color" : [0.8, 0.8, 0.0]
+      }
+    ],
     "materials": [
       {
         "type" : "lambertian",
-        "albedo" : [1.0, 0.0, 0.0]
+        "albedo" : 0
       },
       {
         "type" : "lambertian",
-        "albedo" : [0.0, 0.0, 1.0]
+        "albedo" : 1
       },
       {
         "type" : "metal",
-        "albedo" : [0.5, 0.7, 0.6],
+        "albedo" : 2,
         "fuzziness" : 0.05
       },
       {
@@ -20,7 +38,7 @@
       },
       {
         "type" : "lambertian",
-        "albedo" : [0.8, 0.8, 0.0]
+        "albedo" : 3
       }
     ], 
     "hitables": [

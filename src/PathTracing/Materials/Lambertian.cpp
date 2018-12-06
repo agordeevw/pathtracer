@@ -5,13 +5,12 @@
 
 namespace PathTracing {
 namespace Materials {
-Lambertian::Lambertian(const glm::vec3& a) : albedo(a) {}
-
+Lambertian::Lambertian(const Texture& albedo) : albedo(albedo) {}
 bool Lambertian::scatter(const Ray& rayIn, const HitRecord& rec,
                          glm::vec3& attenuation, Ray& scattered) const {
   glm::vec3 target = rec.point + rec.normal + Util::Random::randInUnitSphere();
   scattered = Ray{rec.point, target - rec.point, rayIn.time};
-  attenuation = albedo;
+  attenuation = albedo.sample(0, 0, rec.point);
   return true;
 }
 }  // namespace Materials

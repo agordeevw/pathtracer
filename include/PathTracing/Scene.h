@@ -6,16 +6,14 @@
 #include "PathTracing/Hitables/BVH.h"
 #include "PathTracing/Hitables/HitableList.h"
 #include "PathTracing/Material.h"
+#include "PathTracing/Texture.h"
 
 namespace PathTracing {
-class Material;
-class Hitable;
-
 class Scene {
  public:
   template <class T, class... Args>
   const Material& createMaterial(Args&&... args) {
-    materialsStorage.emplace_back(
+    materialsStorage.push_back(
         std::make_unique<T>(std::forward<Args>(args)...));
     return *materialsStorage.back();
   }
@@ -25,6 +23,19 @@ class Scene {
       return *materialsStorage[id].get();
     else
       throw std::runtime_error("Invalid material id");
+  }
+
+  template <class T, class... Args>
+  const Texture& createTexture(Args&&... args) {
+    texturesStorage.push_back(std::make_unique<T>(std::forward<Args>(args)...));
+    return *texturesStorage.back();
+  }
+
+  const Texture& getTextureById(int id) {
+    if (id >= 0 && id < texturesStorage.size())
+      return *texturesStorage[id].get();
+    else
+      throw std::runtime_error("Invalid texture id");
   }
 
   template <class T, class... Args>
@@ -45,6 +56,7 @@ class Scene {
   const Hitable& getWorld() const { return bvh; }
 
  private:
+  std::vector<std::unique_ptr<Texture>> texturesStorage;
   std::vector<std::unique_ptr<Material>> materialsStorage;
   std::vector<std::unique_ptr<Hitable>> hitablesStorage;
   mutable Hitables::BVH bvh;

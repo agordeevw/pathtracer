@@ -10,6 +10,7 @@
 #include "PathTracing/Materials/Lambertian.h"
 #include "PathTracing/Materials/Metal.h"
 #include "PathTracing/Scene.h"
+#include "PathTracing/Textures/ConstantTexture.h"
 #include "PathTracingApplication.h"
 #include "Util/TimeMeasure.h"
 
@@ -30,16 +31,17 @@ void loadJsonFromFile(const std::string& path, Json& j) {
   }
 }
 
+inline void parseVec3(const Json& jVec3, glm::vec3& v) {
+  for (int i = 0; i < 3; i++) v[i] = jVec3[i].get<float>();
+}
+
 void parseCameraParams(const Json& j,
                        PathTracing::CameraParameters& cameraParams) {
   try {
     auto& jCameraParams = j["cameraParameters"];
-    for (int i = 0; i < 3; i++)
-      cameraParams.lookFrom[i] = jCameraParams["lookFrom"][i].get<float>();
-    for (int i = 0; i < 3; i++)
-      cameraParams.lookAt[i] = jCameraParams["lookAt"][i].get<float>();
-    for (int i = 0; i < 3; i++)
-      cameraParams.up[i] = jCameraParams["up"][i].get<float>();
+    parseVec3(jCameraParams["lookFrom"], cameraParams.lookFrom);
+    parseVec3(jCameraParams["lookAt"], cameraParams.lookAt);
+    parseVec3(jCameraParams["up"], cameraParams.up);
     cameraParams.fov = jCameraParams["fov"].get<float>();
     cameraParams.aperture = jCameraParams["aperture"].get<float>();
     cameraParams.focusDist = jCameraParams["focusDist"].get<float>();
@@ -89,27 +91,46 @@ void parseTracingParams(const Json& j,
     throw std::runtime_error("Threads count < 1");
 }
 
-void parseScene(const Json& j, PathTracing::Scene& scene) {
+void parseSceneTextures(const Json& jScene, PathTracing::Scene& scene) {
+  try {
+    using namespace PathTracing::Textures;
+
+    auto& jTextures = jScene["textures"];
+    for (auto& jTexture : jTextures) {
+      std::string type = jTexture["type"].get<std::string>();
+      if (type == "constant") {
+        glm::vec3 color;
+        parseVec3(jTexture["color"], color);
+        scene.createTexture<ConstantTexture>(color);
+      } else {
+        throw std::runtime_error("Unknown texture type: " + type);
+      }
+    }
+  } catch (const std::exception& e) {
+    throw std::runtime_error(std::string("Failed to parse scene textures from "
+                                         "input JSON file.\nDetails: ") +
+                             e.what());
+  }
+}
+
+void parseSceneMaterials(const Json& jScene, PathTracing::Scene& scene) {
   try {
     using namespace PathTracing::Materials;
-    using namespace PathTracing::Hitables;
 
-    auto& jScene = j["scene"];
     auto& jMaterials = jScene["materials"];
     for (auto& jMaterial : jMaterials) {
       std::string type = jMaterial["type"].get<std::string>();
       if (type == "lambertian") {
-        glm::vec3 albedo;
-        for (int i = 0; i < 3; i++)
-          albedo[i] = jMaterial["albedo"][i].get<float>();
-        scene.createMaterial<Lambertian>(albedo);
+        int albedoTextureId;
+        albedoTextureId = jMaterial["albedo"].get<int>();
+        scene.createMaterial<Lambertian>(scene.getTextureById(albedoTextureId));
       } else if (type == "metal") {
-        glm::vec3 albedo;
+        int albedoTextureId;
         float fuzziness;
-        for (int i = 0; i < 3; i++)
-          albedo[i] = jMaterial["albedo"][i].get<float>();
+        albedoTextureId = jMaterial["albedo"].get<int>();
         fuzziness = jMaterial["fuzziness"].get<float>();
-        scene.createMaterial<Metal>(albedo, fuzziness);
+        scene.createMaterial<Metal>(scene.getTextureById(albedoTextureId),
+                                    fuzziness);
       } else if (type == "dielectric") {
         float reflectiveIdx;
         reflectiveIdx = jMaterial["reflectiveIdx"].get<float>();
@@ -118,6 +139,17 @@ void parseScene(const Json& j, PathTracing::Scene& scene) {
         throw std::runtime_error("Unknown material type: " + type);
       }
     }
+  } catch (const std::exception& e) {
+    throw std::runtime_error(std::string("Failed to parse scene materials from "
+                                         "input JSON file.\nDetails: ") +
+                             e.what());
+  }
+}
+
+void parseSceneHitables(const Json& jScene, PathTracing::Scene& scene) {
+  try {
+    using namespace PathTracing::Hitables;
+
     auto& jHitables = jScene["hitables"];
     for (auto& jHitable : jHitables) {
       std::string type = jHitable["type"].get<std::string>();
@@ -125,8 +157,7 @@ void parseScene(const Json& j, PathTracing::Scene& scene) {
         glm::vec3 center;
         float radius;
         int materialId;
-        for (auto i = 0; i < 3; i++)
-          center[i] = jHitable["center"][i].get<float>();
+        parseVec3(jHitable["center"], center);
         radius = jHitable["radius"].get<float>();
         materialId = jHitable["material"].get<int>();
         scene.createHitable<Sphere>(center, radius,
@@ -138,10 +169,8 @@ void parseScene(const Json& j, PathTracing::Scene& scene) {
         float finishTime;
         float radius;
         int materialId;
-        for (auto i = 0; i < 3; i++)
-          startCenter[i] = jHitable["start center"][i].get<float>();
-        for (auto i = 0; i < 3; i++)
-          finishCenter[i] = jHitable["finish center"][i].get<float>();
+        parseVec3(jHitable["start center"], startCenter);
+        parseVec3(jHitable["finish center"], finishCenter);
         startTime = jHitable["start time"].get<float>();
         finishTime = jHitable["finish time"].get<float>();
         radius = jHitable["radius"].get<float>();
@@ -154,10 +183,16 @@ void parseScene(const Json& j, PathTracing::Scene& scene) {
       }
     }
   } catch (const std::exception& e) {
-    throw std::runtime_error(
-        std::string("Failed to parse scene from input JSON file.\nDetails: ") +
-        e.what());
+    throw std::runtime_error(std::string("Failed to parse scene hitables from "
+                                         "input JSON file.\nDetails: ") +
+                             e.what());
   }
+}
+
+void parseScene(const Json& j, PathTracing::Scene& scene) {
+  parseSceneTextures(j["scene"], scene);
+  parseSceneMaterials(j["scene"], scene);
+  parseSceneHitables(j["scene"], scene);
 }
 }  // namespace
 
