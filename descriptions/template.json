@@ -1,0 +1,22 @@
+{
+  "scene" : {
+    "textures" : [],
+    "materials": [], 
+    "hitables": []
+  },
+  "cameraParameters" : {
+    "lookFrom" : [0.0, 0.0, 0.0],
+    "lookAt" : [0.0, 0.0, -1.0],
+    "up" : [0.0, 1.0, 0.0],
+    "fov" : 45.0,
+    "aperture" : 0.00,
+    "focusDist" : 1.0,
+    "shutterOpenTime" : 0.0,
+    "shutterCloseTime" : 0.0
+  },
+  "tracingParameters" : {
+    "imageWidth" : 400,
+    "imageHeight" : 400,
+    "samplesPerPixel" : 128
+  }
+}

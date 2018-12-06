@@ -10,7 +10,7 @@ class AABB;
 namespace Hitables {
 class BVH : public Hitable {
  public:
-  BVH() = default;
+  BVH();
   BVH(Hitable** begin, Hitable** end, float time0, float time1);
   BVH(BVH&&) = default;
   BVH& operator=(BVH&&) = default;

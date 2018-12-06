@@ -6,16 +6,17 @@
 
 namespace PathTracing {
 namespace Hitables {
+BVH::BVH() : root(nullptr) {}
 BVH::BVH(Hitable** begin, Hitable** end, float time0, float time1) {
   // reasonable estimate for used bvh generation algorithm
   nodes.reserve(2 * (end - begin) + 1);
   root = createNode(begin, end, time0, time1);
 }
 bool BVH::hit(const Ray& r, float tMin, float tMax, HitRecord& rec) const {
-  return root->hit(r, tMin, tMax, rec);
+  return root ? root->hit(r, tMin, tMax, rec) : false;
 }
 bool BVH::boundingBox(float t0, float t1, AABB& box) const {
-  return root->boundingBox(t0, t1, box);
+  return root ? root->boundingBox(t0, t1, box) : false;
 }
 BVH::BVHNode::BVHNode(Hitable* left, Hitable* right, float time0, float time1)
     : left(left), right(right) {
@@ -63,7 +64,7 @@ BVH::BVHNode* BVH::createNode(Hitable** begin, Hitable** end, float time0,
                               float time1) {
   const auto n = end - begin;
 
-  if (n < 0) {
+  if (n <= 0) {
     throw std::logic_error("Incorrect hitables range provided to BVH");
   }
 

@@ -49,8 +49,10 @@ class Scene {
     for (auto& hitablePtr : hitablesStorage) {
       hitables.push_back(hitablePtr.get());
     }
-    bvh = Hitables::BVH{hitables.data(), hitables.data() + hitables.size(),
-                        time0, time1};
+    if (hitables.size() > 0) {
+      bvh = Hitables::BVH{hitables.data(), hitables.data() + hitables.size(),
+                          time0, time1};
+    }
   }
 
   const Hitable& getWorld() const { return bvh; }
