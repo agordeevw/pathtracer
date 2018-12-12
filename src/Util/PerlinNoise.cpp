@@ -9,11 +9,11 @@
 namespace Util {
 PerlinNoise::PerlinNoise(unsigned int seed)
     : values(256), permutationX(256), permutationY(256), permutationZ(256) {
-  std::uniform_real_distribution<float> distr;
+  std::uniform_real_distribution<float> distr{-1.0f, 1.0f};
   std::default_random_engine randomEngine(seed);
 
   for (int i = 0; i < 256; i++) {
-    values[i] = distr(randomEngine);
+    values[i] = {distr(randomEngine), distr(randomEngine), distr(randomEngine)};
     permutationX[i] = i;
     permutationY[i] = i;
     permutationZ[i] = i;
@@ -24,13 +24,16 @@ PerlinNoise::PerlinNoise(unsigned int seed)
   std::shuffle(permutationZ.begin(), permutationZ.end(), randomEngine);
 }
 
-inline float trilinearInterpolation(float c[2][2][2], const glm::vec3& uvw) {
+inline float perlinInterpolation(glm::vec3 c[2][2][2], const glm::vec3& uvw) {
+  glm::vec3 smoothedUvw = uvw * uvw * (3.0f - 2.0f * uvw);
   float accum = 0;
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 2; j++) {
       for (int k = 0; k < 2; k++) {
-        glm::vec3 tmp = glm::mix(1.0f - uvw, uvw, glm::vec3{ i, j, k });
-        accum += tmp.x * tmp.y * tmp.z * c[i][j][k];
+        glm::vec3 weights{uvw[0] - i, uvw[1] - j, uvw[2] - k};
+        glm::vec3 tmp =
+            glm::mix(1.0f - smoothedUvw, smoothedUvw, glm::vec3{i, j, k});
+        accum += tmp.x * tmp.y * tmp.z * glm::dot(c[i][j][k], weights);
       }
     }
   }
@@ -38,10 +41,8 @@ inline float trilinearInterpolation(float c[2][2][2], const glm::vec3& uvw) {
 }
 
 float PerlinNoise::sample(const glm::vec3& p) const {
-  glm::vec3 uvw = p - glm::floor(p);
-  uvw = uvw * uvw * (3.0f - 2.0f * uvw);
   glm::ivec3 ijk{glm::floor(p)};
-  float c[2][2][2];
+  glm::vec3 c[2][2][2];
   for (int di = 0; di < 2; di++) {
     for (int dj = 0; dj < 2; dj++) {
       for (int dk = 0; dk < 2; dk++) {
@@ -51,6 +52,7 @@ float PerlinNoise::sample(const glm::vec3& p) const {
       }
     }
   }
-  return trilinearInterpolation(c, uvw);
+  glm::vec3 uvw = p - glm::floor(p);
+  return perlinInterpolation(c, uvw);
 }
 }  // namespace Util

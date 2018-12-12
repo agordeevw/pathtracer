@@ -12,7 +12,7 @@ class PerlinNoise {
   float sample(const glm::vec3& p) const;
 
 private:
-  std::vector<float> values;
+  std::vector<glm::vec3> values;
   std::vector<int> permutationX;
   std::vector<int> permutationY;
   std::vector<int> permutationZ;

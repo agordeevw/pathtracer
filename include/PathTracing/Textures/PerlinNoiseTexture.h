@@ -11,7 +11,7 @@ class PerlinNoiseTexture : public Texture {
   PerlinNoiseTexture(unsigned int seed, float scale)
       : noise(seed), scale(scale) {}
   glm::vec3 sample(float u, float v, const glm::vec3& p) const override {
-    return glm::vec3{1} * noise.sample(p * scale);
+    return glm::vec3{0.5} * (1.0f + noise.sample(p * scale));
   }
 
  private:
