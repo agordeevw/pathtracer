@@ -6,8 +6,8 @@
         "color" : [1.0, 0.0, 0.0]
       },
       {
-        "type" : "constant",
-        "color" : [0.0, 0.0, 1.0]
+        "type" : "perlin noise",
+        "seed" : 42
       },
       {
         "type" : "constant",
@@ -43,7 +43,7 @@
       {
         "type" : "metal",
         "albedo" : 2,
-        "fuzziness" : 0.05
+        "fuzziness" : 0.02
       },
       {
         "type" : "dielectric",

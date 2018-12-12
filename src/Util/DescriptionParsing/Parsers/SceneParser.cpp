@@ -7,11 +7,14 @@
 #include "PathTracing/Materials/Metal.h"
 #include "PathTracing/Textures/CheckerTexture.h"
 #include "PathTracing/Textures/ConstantTexture.h"
+#include "PathTracing/Textures/PerlinNoiseTexture.h"
 #include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
 #include "Util/DescriptionParsing/Parsers/SceneParser.h"
 
-#define TEXTURE_TYPES \
-  PathTracing::Textures::ConstantTexture, PathTracing::Textures::CheckerTexture
+#define TEXTURE_TYPES                        \
+  PathTracing::Textures::ConstantTexture,    \
+      PathTracing::Textures::CheckerTexture, \
+      PathTracing::Textures::PerlinNoiseTexture
 #define MATERIAL_TYPES                                                    \
   PathTracing::Materials::Dielectric, PathTracing::Materials::Lambertian, \
       PathTracing::Materials::Metal
