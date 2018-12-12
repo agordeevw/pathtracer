@@ -46,6 +46,12 @@ Implemented simple scene loader from JSON description files. Now I don't have to
 
 3D-checker pattern works by combining two procedural textures. Right now only constant and checker textures are implemented. Scene description loader should check that texture references digraph is acyclic.
 
+### Noise + procedural texture using the noise
+
+![Noise](https://github.com/agordeevw/pathtracer/blob/master/images/Noise.png)
+
+Implemented procedural Perlin noise and weird procedural texture.
+
 ## "Raytracing: The Rest Of Your Life"
 
 Pending.
