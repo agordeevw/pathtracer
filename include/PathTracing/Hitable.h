@@ -10,6 +10,8 @@ struct HitRecord {
   float t;
   glm::vec3 point;
   glm::vec3 normal;
+  float u;
+  float v;
   const Material* material;
 };
 

@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <glm/geometric.hpp>
 
 #include "PathTracing/AABB.h"
@@ -22,6 +25,9 @@ bool Sphere::hit(const Ray& r, float tMin, float tMax, HitRecord& rec) const {
       rec.point = r.pointAtT(rec.t);
       rec.normal = (rec.point - center) / radius;
       rec.material = material;
+      glm::vec3 localPoint = (rec.point - center) / radius;
+      rec.u = float(1.0f - (atan2f(localPoint.z, localPoint.x) + M_PI) * 0.5f / M_PI);
+      rec.v = float((asinf(localPoint.y) + 0.5f * M_PI) / M_PI);
       return true;
     }
     temp = (-b + sqrtf(discr)) / a;
@@ -30,6 +36,9 @@ bool Sphere::hit(const Ray& r, float tMin, float tMax, HitRecord& rec) const {
       rec.point = r.pointAtT(rec.t);
       rec.normal = (rec.point - center) / radius;
       rec.material = material;
+      glm::vec3 localPoint = (rec.point - center) / radius;
+      rec.u = float(1.0f - (atan2f(localPoint.z, localPoint.x) + M_PI) * 0.5f / M_PI);
+      rec.v = float((asinf(localPoint.y) + 0.5f * M_PI) / M_PI);
       return true;
     }
   }

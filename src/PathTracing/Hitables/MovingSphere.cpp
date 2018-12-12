@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
@@ -32,6 +35,9 @@ bool MovingSphere::hit(const Ray& r, float tMin, float tMax,
       rec.point = r.pointAtT(rec.t);
       rec.normal = (rec.point - centerAtTime(r.time)) / radius;
       rec.material = material;
+      glm::vec3 localPoint = (rec.point - centerAtTime(r.time)) / radius;
+      rec.u = float(1.0f - (atan2f(localPoint.z, localPoint.x) + M_PI) * 0.5f / M_PI);
+      rec.v = float((asinf(localPoint.y) + 0.5f * M_PI) / M_PI);
       return true;
     }
     temp = (-b + sqrtf(discr)) / a;
@@ -40,6 +46,9 @@ bool MovingSphere::hit(const Ray& r, float tMin, float tMax,
       rec.point = r.pointAtT(rec.t);
       rec.normal = (rec.point - centerAtTime(r.time)) / radius;
       rec.material = material;
+      glm::vec3 localPoint = (rec.point - centerAtTime(r.time)) / radius;
+      rec.u = float(1.0f - (atan2f(localPoint.z, localPoint.x) + M_PI) * 0.5f / M_PI);
+      rec.v = float((asinf(localPoint.y) + 0.5f * M_PI) / M_PI);
       return true;
     }
   }

@@ -17,7 +17,7 @@ bool Metal::scatter(const Ray& rayIn, const HitRecord& rec,
   scattered =
       Ray{rec.point, reflected + fuzziness * Util::Random::randInUnitSphere(),
           rayIn.time};
-  attenuation = albedo.sample(0, 0, rec.point);
+  attenuation = albedo.sample(rec.u, rec.v, rec.point);
   return glm::dot(scattered.direction, rec.normal) > 0.0f;
 }
 }  // namespace Materials
