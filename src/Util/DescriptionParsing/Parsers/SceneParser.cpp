@@ -41,7 +41,8 @@ void tryParseSceneElementOfType(const Json& jSceneElement,
   if constexpr (sizeof...(Ts) > 0) {
     tryParseSceneElementOfType<BaseType, Ts...>(jSceneElement, scene);
   } else {
-    throw std::runtime_error("Unknown type: " + jSceneElement["type"]);
+    throw std::runtime_error("Unknown type: " +
+                             jSceneElement["type"].get<std::string>());
   }
 }
 
