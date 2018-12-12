@@ -1,19 +1,16 @@
 #pragma once
 #include <string>
 
-#include "PathTracing/Camera.h"
-#include "PathTracing/PathTracing.h"
-#include "PathTracing/Scene.h"
+#include "PathTracing/Description.h"
 
 class PathTracingApplication {
  public:
-  PathTracingApplication(const std::string& inputFilePath, int threadCount);
+  PathTracingApplication(const std::string& descriptionFilePath,
+                         int threadCount);
   void run(const std::string& outputFile);
 
  private:
-  void loadDescription(const std::string& path);
+  void loadDescription(const std::string& descriptionFilePath);
 
-  PathTracing::Scene scene;
-  PathTracing::CameraParameters cameraParams;
-  PathTracing::TracingParameters tracingParams;
+  PathTracing::Description description;
 };
