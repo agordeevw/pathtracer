@@ -13,7 +13,8 @@ const char* SceneElementParser<Type>::getTypeString() { return "perlin noise"; }
 
 void SceneElementParser<Type>::parse(const Json& jTexture) {
   unsigned int seed = jTexture["seed"].get<unsigned int>();
-  scene.createTexture<Type>(seed);
+  float scale = jTexture["scale"].get<float>();
+  scene.createTexture<Type>(seed, scale);
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
