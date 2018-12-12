@@ -56,7 +56,7 @@ Implemented procedural Perlin noise and weird procedural texture.
 
 ![Image texture](https://github.com/agordeevw/pathtracer/blob/master/images/ImageTexture.png)
 
-Implamented image textures.
+Implemented image textures.
 
 ## "Raytracing: The Rest Of Your Life"
 
