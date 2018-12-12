@@ -9,7 +9,7 @@ class ConstantTexture : public Texture {
   ConstantTexture(const glm::vec3& color) : color(color) {}
   ~ConstantTexture() override = default;
 
-  glm::vec3 sample(float u, float v, const glm::vec3& p) const override {
+  glm::vec3 sample(float, float, const glm::vec3&) const override {
     return color;
   }
 

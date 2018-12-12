@@ -56,7 +56,8 @@ bool BVH::BVHNode::hit(const Ray& r, float tMin, float tMax,
   }
   return false;
 }
-bool BVH::BVHNode::boundingBox(float t0, float t1, AABB& box) const {
+bool BVH::BVHNode::boundingBox(float, float, AABB& box) const {
+  // BVH is static in time, therefore t0 and t1 are unused
   box = this->box;
   return true;
 }
@@ -72,8 +73,10 @@ BVH::BVHNode* BVH::createNode(Hitable** begin, Hitable** end, float time0,
   std::sort(begin, end,
             [time0, time1, axis](const Hitable* l, const Hitable* r) {
               AABB boxLeft{}, boxRight{};
-              bool leftHasBox = l->boundingBox(time0, time1, boxLeft);
-              bool rightHasBox = r->boundingBox(time0, time1, boxRight);
+              [[maybe_unused]] bool leftHasBox =
+                  l->boundingBox(time0, time1, boxLeft);
+              [[maybe_unused]] bool rightHasBox =
+                  r->boundingBox(time0, time1, boxRight);
               // Will check for missing boxes at BVHNode ctor
               // while creating the BVH tree
               return boxLeft.min[axis] < boxRight.min[axis];

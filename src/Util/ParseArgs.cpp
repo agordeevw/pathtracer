@@ -6,7 +6,7 @@ namespace Util {
 namespace ParseArgs {
 bool parseArgs(int argc, char** argv, ProgramOptions& opts) {
   cxxopts::Options options(argv[0]);
-  auto& addOption = options.add_options();
+  auto&& addOption = options.add_options();
   addOption("i,input", "Path to path tracer settings JSON file",
             cxxopts::value<std::string>(), "PATH");
   addOption("o,output", "Path to resulting image saved in bmp format",
