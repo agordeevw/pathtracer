@@ -38,7 +38,7 @@
       },
       {
         "type" : "lambertian",
-        "albedo" : 1
+        "albedo" : 6
       },
       {
         "type" : "metal",
@@ -55,7 +55,7 @@
       },
       {
         "type" : "lambertian",
-        "albedo" : 6
+        "albedo" : 1
       }
     ], 
     "hitables": [
