@@ -1,6 +1,5 @@
 #include <type_traits>
 
-#include "Util/DescriptionParsing/Parsers/SceneParser.h"
 #include "PathTracing/Hitables/MovingSphere.h"
 #include "PathTracing/Hitables/Sphere.h"
 #include "PathTracing/Materials/Dielectric.h"
@@ -9,6 +8,15 @@
 #include "PathTracing/Textures/CheckerTexture.h"
 #include "PathTracing/Textures/ConstantTexture.h"
 #include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
+#include "Util/DescriptionParsing/Parsers/SceneParser.h"
+
+#define TEXTURE_TYPES \
+  PathTracing::Textures::ConstantTexture, PathTracing::Textures::CheckerTexture
+#define MATERIAL_TYPES                                                    \
+  PathTracing::Materials::Dielectric, PathTracing::Materials::Lambertian, \
+      PathTracing::Materials::Metal
+#define HITABLE_TYPES \
+  PathTracing::Hitables::Sphere, PathTracing::Hitables::MovingSphere
 
 namespace Util {
 namespace DescriptionParsing {
@@ -44,16 +52,9 @@ void parseSceneGroupOfType(const Json& jSceneGroup, PathTracing::Scene& scene) {
 }  // namespace detail
 
 void SceneParser::parse(const Json& jScene) {
-  using namespace PathTracing;
-
-#define TEXTURE_TYPES Textures::ConstantTexture, Textures::CheckerTexture
-#define MATERIAL_TYPES \
-  Materials::Dielectric, Materials::Lambertian, Materials::Metal
-#define HITABLE_TYPES Hitables::Sphere, Hitables::MovingSphere
-
   try {
-    detail::parseSceneGroupOfType<Texture, TEXTURE_TYPES>(jScene["textures"],
-                                                          scene);
+    detail::parseSceneGroupOfType<PathTracing::Texture, TEXTURE_TYPES>(
+        jScene["textures"], scene);
   } catch (const std::exception& e) {
     throw std::runtime_error(
         std::string("Failed to parse textures from JSON file. Details: ") +
@@ -61,8 +62,8 @@ void SceneParser::parse(const Json& jScene) {
   }
 
   try {
-    detail::parseSceneGroupOfType<Material, MATERIAL_TYPES>(jScene["materials"],
-                                                            scene);
+    detail::parseSceneGroupOfType<PathTracing::Material, MATERIAL_TYPES>(
+        jScene["materials"], scene);
   } catch (const std::exception& e) {
     throw std::runtime_error(
         std::string("Failed to parse materials from JSON file. Details: ") +
@@ -70,8 +71,8 @@ void SceneParser::parse(const Json& jScene) {
   }
 
   try {
-    detail::parseSceneGroupOfType<Hitable, HITABLE_TYPES>(jScene["hitables"],
-                                                          scene);
+    detail::parseSceneGroupOfType<PathTracing::Hitable, HITABLE_TYPES>(
+        jScene["hitables"], scene);
   } catch (const std::exception& e) {
     throw std::runtime_error(
         std::string("Failed to parse hitables from JSON file. Details: ") +
