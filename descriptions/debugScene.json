@@ -34,6 +34,10 @@
       {
         "type" : "constant",
         "color" : [0.05, 0.1, 0.4]
+      },
+      {
+        "type" : "constant",
+        "color" : [32.0, 0.0, 0.0]
       }
     ],
     "materials": [
@@ -65,6 +69,10 @@
       {
         "type" : "lambertian",
         "albedo" : 7
+      },
+      {
+        "type" : "diffuse light",
+        "emission" : 8
       }
     ], 
     "hitables": [
@@ -112,6 +120,12 @@
         "center" : [-0.8, 1.7, -3.0],
         "radius" : 1.0,
         "material" : 6
+      },
+      {
+        "type" : "sphere",
+        "center" : [0.5, -1.0, 0.0],
+        "radius" : 0.25,
+        "material" : 7
       }
     ]
   },
@@ -120,7 +134,7 @@
     "lookAt" : [0.0, 0.0, 0.0],
     "up" : [0.0, 1.0, 0.0],
     "fov" : 45.0,
-    "aperture" : 0.01,
+    "aperture" : 0.05,
     "focusDist" : 57.5,
     "shutterOpenTime" : 0.0,
     "shutterCloseTime" : 1.0
@@ -128,6 +142,6 @@
   "tracingParameters" : {
     "imageWidth" : 400,
     "imageHeight" : 400,
-    "samplesPerPixel" : 128
+    "samplesPerPixel" : 256
   }
 }

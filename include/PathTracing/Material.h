@@ -11,5 +11,9 @@ class Material {
 
   virtual bool scatter(const Ray& rayIn, const HitRecord& rec,
                        glm::vec3& attenuation, Ray& scattered) const = 0;
+
+  virtual glm::vec3 emit(float u, float v, const glm::vec3& p) const {
+    return {};
+  }
 };
 }  // namespace PathTracing

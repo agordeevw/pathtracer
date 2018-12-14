@@ -25,12 +25,12 @@ glm::vec3 color(const Ray& r, const Hitable& hitable, int depth) {
   HitRecord rec;
   if (hitable.hit(r, 0.001f, FLT_MAX, rec)) {
     Ray scattered;
+    glm::vec3 ret = rec.material->emit(rec.u, rec.v, rec.point);
     glm::vec3 attenuation;
     if (depth < 50 && rec.material->scatter(r, rec, attenuation, scattered)) {
-      return attenuation * color(scattered, hitable, depth + 1);
-    } else {
-      return {};
+      ret += attenuation * color(scattered, hitable, depth + 1);
     }
+    return ret;
   } else {
     return noHitColor(r);
   }
@@ -53,12 +53,16 @@ Util::Image traceScene(const Scene& scene, const Camera& camera,
            x++) {
         glm::vec3 col{};
         for (int sample = 0; sample < params.samplesPerPixel; sample++) {
-          float u = (float(x) + randf() - 0.5f) / float(params.imageWidth);
-          float v = (float(y) + randf() - 0.5f) / float(params.imageHeight);
+          float u = (float(x) + randf(-0.5f, 0.5f)) / float(params.imageWidth);
+          float v = (float(y) + randf(-0.5f, 0.5f)) / float(params.imageHeight);
 
           col += color(camera.getRay(u, v), scene.getWorld(), 0) /
                  float(params.samplesPerPixel);
         }
+
+        // tone mapping
+        col = col / (col + glm::vec3{ 1.0f });
+
         // gamma-correction
         col = glm::sqrt(col);
 

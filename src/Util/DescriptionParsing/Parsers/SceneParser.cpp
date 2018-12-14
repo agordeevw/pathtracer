@@ -3,6 +3,7 @@
 #include "PathTracing/Hitables/MovingSphere.h"
 #include "PathTracing/Hitables/Sphere.h"
 #include "PathTracing/Materials/Dielectric.h"
+#include "PathTracing/Materials/DiffuseLight.h"
 #include "PathTracing/Materials/Lambertian.h"
 #include "PathTracing/Materials/Metal.h"
 #include "PathTracing/Textures/CheckerTexture.h"
@@ -19,7 +20,7 @@
       PathTracing::Textures::ImageTexture
 #define MATERIAL_TYPES                                                    \
   PathTracing::Materials::Dielectric, PathTracing::Materials::Lambertian, \
-      PathTracing::Materials::Metal
+      PathTracing::Materials::Metal, PathTracing::Materials::DiffuseLight
 #define HITABLE_TYPES \
   PathTracing::Hitables::Sphere, PathTracing::Hitables::MovingSphere
 
