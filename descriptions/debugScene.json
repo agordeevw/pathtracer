@@ -37,7 +37,7 @@
       },
       {
         "type" : "constant",
-        "color" : [32.0, 0.0, 0.0]
+        "color" : [128.0, 0.0, 0.0]
       }
     ],
     "materials": [
@@ -124,8 +124,20 @@
       {
         "type" : "sphere",
         "center" : [0.5, -1.0, 0.0],
-        "radius" : 0.25,
+        "radius" : 0.1,
         "material" : 7
+      },
+      {
+        "type" : "sphere",
+        "center" : [0.5, -1.0, 0.0],
+        "radius" : 0.2,
+        "material" : 3
+      },
+      {
+        "type" : "sphere",
+        "center" : [0.5, -1.0, 0.0],
+        "radius" : -0.15,
+        "material" : 3
       }
     ]
   },
@@ -134,7 +146,7 @@
     "lookAt" : [0.0, 0.0, 0.0],
     "up" : [0.0, 1.0, 0.0],
     "fov" : 45.0,
-    "aperture" : 0.05,
+    "aperture" : 0.025,
     "focusDist" : 57.5,
     "shutterOpenTime" : 0.0,
     "shutterCloseTime" : 1.0
