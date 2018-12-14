@@ -61,8 +61,9 @@ Implemented image textures.
 ### Light source + Tone mapping
 
 ![LightSource+ToneMapping](https://github.com/agordeevw/pathtracer/blob/master/images/LightSource+ToneMapping.png)
+![Desaturation](https://github.com/agordeevw/pathtracer/blob/master/images/Desaturation.png)
 
-Implemented light sources. Because light source can be bright enough so that resulting pixel color components can reach values higher (or lower in case of "negative light") than 1.0, I had to add simple tone mapping.
+Implemented light sources. Because light source can be bright enough so that resulting pixel color components can reach values higher (or lower in case of "negative light") than 1.0, I had to add simple tone mapping. Result didn't seem satisfying, so I tried another approach with desaturation.
 
 ## "Raytracing: The Rest Of Your Life"
 

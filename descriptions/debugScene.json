@@ -142,6 +142,6 @@
   "tracingParameters" : {
     "imageWidth" : 400,
     "imageHeight" : 400,
-    "samplesPerPixel" : 256
+    "samplesPerPixel" : 4096
   }
 }

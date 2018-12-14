@@ -61,7 +61,10 @@ Util::Image traceScene(const Scene& scene, const Camera& camera,
         }
 
         // tone mapping
-        col = col / (col + glm::vec3{ 1.0f });
+        float m = glm::max(glm::max(glm::max(col.r, col.g), col.b), 1.0f);
+        col /= m;
+        m = glm::clamp((m - 1.0f) * 0.2f, 0.0f, 1.0f);
+        col = col * (1.0f - m) + glm::vec3{ m };
 
         // gamma-correction
         col = glm::sqrt(col);
