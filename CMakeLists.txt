@@ -23,7 +23,7 @@ conan_basic_setup()
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
   LINKER_LANGUAGE CXX
-  CXX_STANDARD 17
+  CXX_STANDARD 11
   CXX_STANDARD_REQUIRED YES
   CXX_EXTENSIONS NO)
 add_dependencies(${PROJECT_NAME} cxxopts)

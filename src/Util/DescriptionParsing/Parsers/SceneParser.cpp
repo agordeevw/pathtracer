@@ -31,30 +31,48 @@ namespace detail {
 using Json = SceneParser::Json;
 
 template <class BaseType, class T, class... Ts>
-void tryParseSceneElementOfType(const Json& jSceneElement,
-                                PathTracing::Scene& scene) {
-  static_assert(std::is_base_of_v<BaseType, T>);
+struct ParseSceneGroupHelper {
+  static_assert(std::is_base_of_v<BaseType, T>,
+                "Provided type is not a subtype of base scene element type");
 
-  if (jSceneElement["type"] == SceneElementParser<T>::getTypeString()) {
-    SceneElementParser<T> elemParser(scene);
-    elemParser.parse(jSceneElement);
-    return;
+  static void tryParseSceneElement(const Json& jSceneElement,
+                                   PathTracing::Scene& scene) {
+    if (jSceneElement["type"] == SceneElementParser<T>::getTypeString()) {
+      SceneElementParser<T> elemParser(scene);
+      elemParser.parse(jSceneElement);
+      return;
+    }
+
+    ParseSceneGroupHelper<BaseType, Ts...>::tryParseSceneElement(jSceneElement,
+                                                                 scene);
   }
+};
 
-  if constexpr (sizeof...(Ts) > 0) {
-    tryParseSceneElementOfType<BaseType, Ts...>(jSceneElement, scene);
-  } else {
+template <class BaseType, class T>
+struct ParseSceneGroupHelper<BaseType, T> {
+  static_assert(std::is_base_of_v<BaseType, T>,
+                "Provided type is not a subtype of base scene element type");
+
+  static void tryParseSceneElement(const Json& jSceneElement,
+                                   PathTracing::Scene& scene) {
+    if (jSceneElement["type"] == SceneElementParser<T>::getTypeString()) {
+      SceneElementParser<T> elemParser(scene);
+      elemParser.parse(jSceneElement);
+      return;
+    }
+
     throw std::runtime_error("Unknown type: " +
                              jSceneElement["type"].get<std::string>());
   }
-}
+};
 
 template <class BaseType, class... Ts>
 void parseSceneGroupOfType(const Json& jSceneGroup, PathTracing::Scene& scene) {
-  static_assert(sizeof...(Ts) > 0);
+  static_assert(sizeof...(Ts) > 0, "No types specified");
 
   for (auto& jSceneElement : jSceneGroup)
-    tryParseSceneElementOfType<BaseType, Ts...>(jSceneElement, scene);
+    ParseSceneGroupHelper<BaseType, Ts...>::tryParseSceneElement(jSceneElement,
+                                                                 scene);
 }
 }  // namespace detail
 
