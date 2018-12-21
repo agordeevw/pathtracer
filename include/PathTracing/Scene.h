@@ -4,7 +4,6 @@
 
 #include "PathTracing/Hitable.h"
 #include "PathTracing/Hitables/BVH.h"
-#include "PathTracing/Hitables/HitableList.h"
 #include "PathTracing/Material.h"
 #include "PathTracing/Texture.h"
 
