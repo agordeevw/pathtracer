@@ -1,10 +1,9 @@
 #include <glm/vec3.hpp>
 
+#include "DescriptionParsing/Parsers/SceneElementParser.h"
 #include "PathTracing/Materials/Metal.h"
 #include "PathTracing/Scene.h"
-#include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 using Type = PathTracing::Materials::Metal;
@@ -18,4 +17,3 @@ void SceneElementParser<Type>::parse(const Json& jMaterial) {
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

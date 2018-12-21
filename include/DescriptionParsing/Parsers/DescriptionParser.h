@@ -1,8 +1,7 @@
 #pragma once
+#include "DescriptionParsing/JsonParser.h"
 #include "PathTracing/Description.h"
-#include "Util/DescriptionParsing/JsonParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 class DescriptionParser : public JsonParser {
@@ -16,4 +15,3 @@ class DescriptionParser : public JsonParser {
 };
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

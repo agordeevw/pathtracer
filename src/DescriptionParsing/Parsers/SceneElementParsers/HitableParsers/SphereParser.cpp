@@ -1,10 +1,9 @@
 #include <glm/vec3.hpp>
 
+#include "DescriptionParsing/Parsers/SceneElementParser.h"
 #include "PathTracing/Hitables/Sphere.h"
 #include "PathTracing/Scene.h"
-#include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 using Type = PathTracing::Hitables::Sphere;
@@ -19,4 +18,3 @@ void SceneElementParser<Type>::parse(const Json& jHitable) {
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

@@ -1,5 +1,7 @@
 #include <type_traits>
 
+#include "DescriptionParsing/Parsers/SceneElementParser.h"
+#include "DescriptionParsing/Parsers/SceneParser.h"
 #include "PathTracing/Hitables/MovingSphere.h"
 #include "PathTracing/Hitables/Sphere.h"
 #include "PathTracing/Materials/Dielectric.h"
@@ -10,8 +12,6 @@
 #include "PathTracing/Textures/ConstantTexture.h"
 #include "PathTracing/Textures/ImageTexture.h"
 #include "PathTracing/Textures/PerlinNoiseTexture.h"
-#include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
-#include "Util/DescriptionParsing/Parsers/SceneParser.h"
 
 #define TEXTURE_TYPES                            \
   PathTracing::Textures::ConstantTexture,        \
@@ -24,7 +24,6 @@
 #define HITABLE_TYPES \
   PathTracing::Hitables::Sphere, PathTracing::Hitables::MovingSphere
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 namespace detail {
@@ -107,4 +106,3 @@ void SceneParser::parse(const Json& jScene) {
 
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

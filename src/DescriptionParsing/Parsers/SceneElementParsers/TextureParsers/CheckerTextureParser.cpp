@@ -1,10 +1,9 @@
 #include <glm/vec3.hpp>
 
+#include "DescriptionParsing/Parsers/SceneElementParser.h"
 #include "PathTracing/Scene.h"
 #include "PathTracing/Textures/CheckerTexture.h"
-#include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 using Type = PathTracing::Textures::CheckerTexture;
@@ -22,4 +21,3 @@ void SceneElementParser<Type>::parse(const Json& jTexture) {
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

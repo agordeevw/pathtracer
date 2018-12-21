@@ -2,7 +2,6 @@
 #include <glm/vec3.hpp>
 #include <nlohmann/json.hpp>
 
-namespace Util {
 namespace DescriptionParsing {
 class JsonParser {
  public:
@@ -18,4 +17,3 @@ class JsonParser {
   }
 };
 }  // namespace DescriptionParsing
-}  // namespace Util

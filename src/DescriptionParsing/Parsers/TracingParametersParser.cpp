@@ -1,6 +1,5 @@
-#include "Util/DescriptionParsing/Parsers/TracingParametersParser.h"
+#include "DescriptionParsing/Parsers/TracingParametersParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 void TracingParametersParser::parse(const Json& jTracingParameters) {
@@ -26,4 +25,3 @@ void TracingParametersParser::parse(const Json& jTracingParameters) {
 
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

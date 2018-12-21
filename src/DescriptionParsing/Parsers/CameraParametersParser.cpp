@@ -1,6 +1,5 @@
-#include "Util/DescriptionParsing/Parsers/CameraParametersParser.h"
+#include "DescriptionParsing/Parsers/CameraParametersParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 void CameraParametersParser::parse(const Json& jCameraParameters) {
@@ -34,4 +33,3 @@ void CameraParametersParser::parse(const Json& jCameraParameters) {
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

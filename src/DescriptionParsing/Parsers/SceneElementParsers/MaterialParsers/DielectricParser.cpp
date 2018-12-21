@@ -1,17 +1,14 @@
 #include <glm/vec3.hpp>
 
+#include "DescriptionParsing/Parsers/SceneElementParser.h"
 #include "PathTracing/Materials/Dielectric.h"
 #include "PathTracing/Scene.h"
-#include "Util/DescriptionParsing/Parsers/SceneElementParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 using Type = PathTracing::Materials::Dielectric;
 
-const char* SceneElementParser<Type>::getTypeString() {
-  return "dielectric";
-}
+const char* SceneElementParser<Type>::getTypeString() { return "dielectric"; }
 
 void SceneElementParser<Type>::parse(const Json& jMaterial) {
   float reflectiveIdx = jMaterial["reflectiveIdx"].get<float>();
@@ -19,4 +16,3 @@ void SceneElementParser<Type>::parse(const Json& jMaterial) {
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util

@@ -1,9 +1,8 @@
-#include "Util/DescriptionParsing/Parsers/DescriptionParser.h"
-#include "Util/DescriptionParsing/Parsers/CameraParametersParser.h"
-#include "Util/DescriptionParsing/Parsers/SceneParser.h"
-#include "Util/DescriptionParsing/Parsers/TracingParametersParser.h"
+#include "DescriptionParsing/Parsers/DescriptionParser.h"
+#include "DescriptionParsing/Parsers/CameraParametersParser.h"
+#include "DescriptionParsing/Parsers/SceneParser.h"
+#include "DescriptionParsing/Parsers/TracingParametersParser.h"
 
-namespace Util {
 namespace DescriptionParsing {
 namespace Parsers {
 void DescriptionParser::parse(const Json& jDescription) {
@@ -18,4 +17,3 @@ void DescriptionParser::parse(const Json& jDescription) {
 }
 }  // namespace Parsers
 }  // namespace DescriptionParsing
-}  // namespace Util
