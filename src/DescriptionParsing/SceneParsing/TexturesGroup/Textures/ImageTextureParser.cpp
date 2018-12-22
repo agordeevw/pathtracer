@@ -1,6 +1,6 @@
 #include <string>
 
-#include "DescriptionParsing/SceneElementJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementJsonParser.h"
 #include "PathTracing/Scene.h"
 #include "PathTracing/Textures/ImageTexture.h"
 

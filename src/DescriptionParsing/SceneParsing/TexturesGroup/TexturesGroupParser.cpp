@@ -1,4 +1,4 @@
-#include "DescriptionParsing/SceneElementGroupJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementGroupJsonParser.h"
 #include "PathTracing/Texture.h"
 #include "PathTracing/Textures/CheckerTexture.h"
 #include "PathTracing/Textures/ConstantTexture.h"

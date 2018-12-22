@@ -2,7 +2,7 @@
 #include <type_traits>
 
 #include "DescriptionParsing/JsonParser.h"
-#include "DescriptionParsing/SceneElementJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementJsonParser.h"
 
 namespace PathTracing {
 class Scene;

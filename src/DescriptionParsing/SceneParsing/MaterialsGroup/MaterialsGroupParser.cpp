@@ -1,4 +1,4 @@
-#include "DescriptionParsing/SceneElementGroupJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementGroupJsonParser.h"
 #include "PathTracing/Material.h"
 #include "PathTracing/Materials/Dielectric.h"
 #include "PathTracing/Materials/DiffuseLight.h"

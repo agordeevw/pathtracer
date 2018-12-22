@@ -1,6 +1,6 @@
 #include <glm/vec3.hpp>
 
-#include "DescriptionParsing/SceneElementJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementJsonParser.h"
 #include "PathTracing/Scene.h"
 #include "PathTracing/Textures/ConstantTexture.h"
 

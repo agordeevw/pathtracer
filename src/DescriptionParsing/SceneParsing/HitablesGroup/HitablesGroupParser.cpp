@@ -1,4 +1,4 @@
-#include "DescriptionParsing/SceneElementGroupJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementGroupJsonParser.h"
 #include "PathTracing/Hitable.h"
 #include "PathTracing/Hitables/MovingSphere.h"
 #include "PathTracing/Hitables/Sphere.h"

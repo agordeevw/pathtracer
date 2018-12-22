@@ -1,4 +1,4 @@
-#include "DescriptionParsing/SceneElementGroupJsonParser.h"
+#include "DescriptionParsing/SceneParsing/SceneElementGroupJsonParser.h"
 
 namespace PathTracing {
 class Texture;
