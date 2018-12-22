@@ -1,18 +1,17 @@
 #include <glm/vec3.hpp>
 
-#include "DescriptionParsing/Parsers/SceneElementParser.h"
+#include "DescriptionParsing/SceneElementJsonParser.h"
 #include "PathTracing/Scene.h"
 #include "PathTracing/Textures/ConstantTexture.h"
 
 namespace DescriptionParsing {
-namespace Parsers {
 using Type = PathTracing::Textures::ConstantTexture;
 
-const char* SceneElementParser<Type>::getTypeString() { return "constant"; }
+const char* SceneElementJsonParser<Type>::name() { return "constant"; }
 
-void SceneElementParser<Type>::parse(const Json& jTexture) {
+void SceneElementJsonParser<Type>::parse(const Json& jTexture,
+                                         PathTracing::Scene& scene) {
   glm::vec3 color = parseVec3(jTexture["color"]);
   scene.createTexture<Type>(color);
 }
-}  // namespace Parsers
 }  // namespace DescriptionParsing

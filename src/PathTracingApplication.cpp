@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "DescriptionParsing/Parsers/DescriptionParser.h"
+#include "DescriptionParsing/JsonParser.h"
 #include "PathTracing/Camera.h"
 #include "PathTracingApplication.h"
 #include "Util/TimeMeasure.h"
@@ -38,10 +38,9 @@ void PathTracingApplication::loadDescription(
     const std::string& descriptionFilePath) {
   std::ifstream is(descriptionFilePath);
 
-  using Json = DescriptionParsing::Parsers::DescriptionParser::Json;
-  Json jDescription;
+  using DescriptionJsonParser = DescriptionParsing::JsonParser<PathTracing::Description>;
+  DescriptionJsonParser::Json jDescription;
   is >> jDescription;
 
-  DescriptionParsing::Parsers::DescriptionParser descriptionParser(description);
-  descriptionParser.parse(jDescription);
+  DescriptionJsonParser::parse(jDescription, description);
 }

@@ -1,8 +1,11 @@
-#include "DescriptionParsing/Parsers/TracingParametersParser.h"
+#include "DescriptionParsing/JsonParser.h"
+#include "PathTracing/PathTracing.h"
 
 namespace DescriptionParsing {
-namespace Parsers {
-void TracingParametersParser::parse(const Json& jTracingParameters) {
+using Type = PathTracing::TracingParameters;
+
+void JsonParser<Type>::parse(const Json& jTracingParameters,
+                             Type& tracingParameters) {
   try {
     tracingParameters.imageWidth = jTracingParameters["imageWidth"].get<int>();
     tracingParameters.imageHeight =
@@ -22,6 +25,4 @@ void TracingParametersParser::parse(const Json& jTracingParameters) {
   if (tracingParameters.samplesPerPixel <= 0)
     throw std::runtime_error("Samples per pixel <= 0");
 }
-
-}  // namespace Parsers
 }  // namespace DescriptionParsing

@@ -1,18 +1,17 @@
 #include <string>
 
-#include "DescriptionParsing/Parsers/SceneElementParser.h"
+#include "DescriptionParsing/SceneElementJsonParser.h"
 #include "PathTracing/Scene.h"
 #include "PathTracing/Textures/ImageTexture.h"
 
 namespace DescriptionParsing {
-namespace Parsers {
 using Type = PathTracing::Textures::ImageTexture;
 
-const char* SceneElementParser<Type>::getTypeString() { return "image"; }
+const char* SceneElementJsonParser<Type>::name() { return "image"; }
 
-void SceneElementParser<Type>::parse(const Json& jTexture) {
+void SceneElementJsonParser<Type>::parse(const Json& jTexture,
+                                         PathTracing::Scene& scene) {
   std::string path = jTexture["path"].get<std::string>();
   scene.createTexture<Type>(path);
 }
-}  // namespace Parsers
 }  // namespace DescriptionParsing

@@ -1,8 +1,11 @@
-#include "DescriptionParsing/Parsers/CameraParametersParser.h"
+#include "DescriptionParsing/JsonParser.h"
+#include "PathTracing/Camera.h"
 
 namespace DescriptionParsing {
-namespace Parsers {
-void CameraParametersParser::parse(const Json& jCameraParameters) {
+using Type = PathTracing::CameraParameters;
+
+void JsonParser<Type>::parse(const Json& jCameraParameters,
+                             Type& cameraParameters) {
   try {
     cameraParameters.lookFrom = parseVec3(jCameraParameters["lookFrom"]);
     cameraParameters.lookAt = parseVec3(jCameraParameters["lookAt"]);
@@ -31,5 +34,4 @@ void CameraParametersParser::parse(const Json& jCameraParameters) {
     throw std::runtime_error(
         "Camera shutter close time is earlier that open time");
 }
-}  // namespace Parsers
 }  // namespace DescriptionParsing

@@ -3,11 +3,12 @@
 #include <nlohmann/json.hpp>
 
 namespace DescriptionParsing {
+template <class T>
 class JsonParser {
  public:
   using Json = nlohmann::json;
 
-  virtual void parse(const Json& j) = 0;
+  static void parse(const Json& j, T& instance);
 
  protected:
   static inline glm::vec3 parseVec3(const Json& jVec3) {

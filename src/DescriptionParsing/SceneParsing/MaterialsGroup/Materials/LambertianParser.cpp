@@ -1,18 +1,17 @@
 #include <glm/vec3.hpp>
 
-#include "DescriptionParsing/Parsers/SceneElementParser.h"
+#include "DescriptionParsing/SceneElementJsonParser.h"
 #include "PathTracing/Materials/Lambertian.h"
 #include "PathTracing/Scene.h"
 
 namespace DescriptionParsing {
-namespace Parsers {
 using Type = PathTracing::Materials::Lambertian;
 
-const char* SceneElementParser<Type>::getTypeString() { return "lambertian"; }
+const char* SceneElementJsonParser<Type>::name() { return "lambertian"; }
 
-void SceneElementParser<Type>::parse(const Json& jMaterial) {
+void SceneElementJsonParser<Type>::parse(const Json& jMaterial,
+                                         PathTracing::Scene& scene) {
   int albedoTextureId = jMaterial["albedo"].get<int>();
   scene.createMaterial<Type>(scene.getTextureById(albedoTextureId));
 }
-}  // namespace Parsers
 }  // namespace DescriptionParsing
